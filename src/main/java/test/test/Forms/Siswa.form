@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Pembiayaan"/>
+    <Property name="title" type="java.lang.String" value="Siswa"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -237,11 +237,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Laki-Laki"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LakiActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="Perempuan">
       <Properties>
         <Property name="text" type="java.lang.String" value="Perempuan"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PerempuanActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

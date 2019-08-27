@@ -170,7 +170,13 @@ public class Siswa extends javax.swing.JFrame {
         Base.open();
         try {
             SiswaModel siswa = new SiswaModel();
-            siswa.set("no_pembiayaan", Nama.getText());
+            siswa.set("nama", Nama.getText());
+            siswa.set("nis", Nis.getText());
+            if (Laki.isSelected()) {
+                siswa.set("jenis_kelamin", "Laki-Laki");   
+            } else {
+                siswa.set("jenis_kelamin", "Perempuan");
+            }
             siswa.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -182,7 +188,13 @@ public class Siswa extends javax.swing.JFrame {
         Base.open();
         try {
             SiswaModel siswa = SiswaModel.findById(ID);
-            siswa.set("no_pembiayaan", Nama.getText());
+            siswa.set("nama", Nama.getText());
+            siswa.set("nis", Nis.getText());
+            if (Laki.isSelected()) {
+                siswa.set("jenis_kelamin", "Laki-Laki");   
+            } else {
+                siswa.set("jenis_kelamin", "Perempuan");
+            }
             siswa.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -193,12 +205,8 @@ public class Siswa extends javax.swing.JFrame {
     private void resetForm() {
         Nama.setText("");
         Nis.setText("");
-        Plafon.setValue(0);
-        Bagi.setValue(0);
-        Pokok.setValue(0);
-        Adm.setValue(0);
-        Tanggal.setDate(null);
-        Jatuh.setDate(null);
+        Laki.setSelected(false);
+        Perempuan.setSelected(false);
     }
 
     /**
@@ -228,7 +236,7 @@ public class Siswa extends javax.swing.JFrame {
         Perempuan = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pembiayaan");
+        setTitle("Siswa");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -322,8 +330,18 @@ public class Siswa extends javax.swing.JFrame {
         LabelCari3.setText("Jenis Kelamin");
 
         Laki.setText("Laki-Laki");
+        Laki.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LakiActionPerformed(evt);
+            }
+        });
 
         Perempuan.setText("Perempuan");
+        Perempuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PerempuanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -416,21 +434,19 @@ public class Siswa extends javax.swing.JFrame {
             ID = model.getValueAt(i, 0).toString();
 
             Base.open();
-            PembiayaanModel pembiayaan = PembiayaanModel.findById(ID);
+            SiswaModel siswa = SiswaModel.findById(ID);
             Base.close();
 
-            Nama.setText(pembiayaan.getString("no_pembiayaan"));
-            Nis.setText(pembiayaan.getString("nama"));
-            try {
-                Tanggal.setDate(ADHhelper.getTanggalFromDB(pembiayaan.getString("tanggal")));
-                Jatuh.setDate(ADHhelper.getTanggalFromDB(pembiayaan.getString("jatuh_tempo")));
-            } catch (ParseException ex) {
-                Logger.getLogger(Siswa.class.getName()).log(Level.SEVERE, null, ex);
+            Nama.setText(siswa.getString("no_pembiayaan"));
+            Nis.setText(siswa.getString("nama"));
+            if (siswa.getString("kelamin").equals("Laki-Laki")) {
+                Laki.setSelected(true);
+                Perempuan.setSelected(false); 
+            } else {
+                Perempuan.setSelected(true); 
+                Laki.setSelected(false);
             }
-            Plafon.setValue(pembiayaan.getInteger("plafon"));
-            Bagi.setValue(pembiayaan.getInteger("basil"));
-            Pokok.setValue(pembiayaan.getInteger("pokok"));
-            Adm.setValue(pembiayaan.getInteger("administrasi"));
+            
             setState("edit");
         }
     }//GEN-LAST:event_TablePegawaiMouseClicked
@@ -438,13 +454,11 @@ public class Siswa extends javax.swing.JFrame {
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
             if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form No Pembiayaan Masih Kosong !!!");
-            } else if (Nis.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Form Nama Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
-            } else if (Jatuh.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Jatuh Tempo Masih Kosong !!!");
+            } else if (Nis.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form NIS Masih Kosong !!!");
+            } else if (!Laki.isSelected() && !Perempuan.isSelected()) {
+                JOptionPane.showMessageDialog(null, "Form Jenis Kelamin Belum Dipilih !!!");
             } else {
                 tambahData();
                 resetForm();
@@ -452,13 +466,11 @@ public class Siswa extends javax.swing.JFrame {
             }
         } else {
             if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form No Pembiayaan Masih Kosong !!!");
-            } else if (Nis.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Form Nama Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
-            } else if (Jatuh.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Jatuh Tempo Masih Kosong !!!");
+            } else if (Nis.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form NIS Masih Kosong !!!");
+            } else if (!Laki.isSelected() && !Perempuan.isSelected()) {
+                JOptionPane.showMessageDialog(null, "Form Jenis Kelamin Belum Dipilih !!!");
             } else {
                 ubahData();
                 resetForm();
@@ -487,6 +499,14 @@ public class Siswa extends javax.swing.JFrame {
     private void NisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NisActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NisActionPerformed
+
+    private void LakiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LakiActionPerformed
+        Perempuan.setSelected(false);
+    }//GEN-LAST:event_LakiActionPerformed
+
+    private void PerempuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerempuanActionPerformed
+        Laki.setSelected(false);
+    }//GEN-LAST:event_PerempuanActionPerformed
 
     /**
      * @param args the command line arguments
