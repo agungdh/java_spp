@@ -593,6 +593,7 @@ public class Kelas extends javax.swing.JFrame {
             Operasional.setValue(kelas.getInteger("operasional"));
             Beras.setValue(kelas.getInteger("beras"));
             Daftar.setValue(kelas.getInteger("daftar_ulang"));
+            Siswa.setSelectedIndex(comboSiswaID.indexOf(Integer.parseInt(kelas.getString("id_siswa"))));
             
             setState("edit");
         }

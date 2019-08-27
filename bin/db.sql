@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Tue, 27 Aug 2019 06:38:52 +0200
+-- Date: Tue, 27 Aug 2019 09:09:45 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -63,7 +63,7 @@ CREATE TABLE `kelas` (
   PRIMARY KEY (`id`),
   KEY `id_siswa` (`id_siswa`),
   CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,11 +73,12 @@ CREATE TABLE `kelas` (
 LOCK TABLES `kelas` WRITE;
 /*!40000 ALTER TABLE `kelas` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `kelas` VALUES (1,2,'1A','2019/2020',100000,200000,300000,400000),(2,1,'2C','2017/2018',123345,236585,237345,589343);
 /*!40000 ALTER TABLE `kelas` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `kelas` with 0 row(s)
+-- Dumped table `kelas` with 2 row(s)
 --
 
 --
@@ -92,7 +93,7 @@ CREATE TABLE `siswa` (
   `nis` varchar(191) NOT NULL,
   `jenis_kelamin` varchar(191) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,11 +103,12 @@ CREATE TABLE `siswa` (
 LOCK TABLES `siswa` WRITE;
 /*!40000 ALTER TABLE `siswa` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `siswa` VALUES (1,'Agung Sapto Margono Dh','15753003','Laki-Laki'),(2,'Perempuan 1','15753000','Perempuan');
 /*!40000 ALTER TABLE `siswa` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `siswa` with 0 row(s)
+-- Dumped table `siswa` with 2 row(s)
 --
 
 --
@@ -152,4 +154,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 27 Aug 2019 06:38:52 +0200
+-- Dump completed on: Tue, 27 Aug 2019 09:09:45 +0200
