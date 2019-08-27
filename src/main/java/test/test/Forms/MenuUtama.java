@@ -20,7 +20,7 @@ public class MenuUtama extends javax.swing.JFrame {
     public MenuUtama() {
         initComponents();
         
-        String path = "src/main/resources/assets/WhatsApp Image 2019-08-21 at 10.23.20 AM.jpeg";
+        String path = "src/main/resources/assets/2015-11-10.jpg";
         ImageIcon MyImage = new ImageIcon(path);
         Image img = MyImage.getImage();
         Image newImg = img.getScaledInstance(Gambar.getWidth(), Gambar.getHeight(), Image.SCALE_SMOOTH);

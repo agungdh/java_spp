@@ -437,9 +437,9 @@ public class Siswa extends javax.swing.JFrame {
             SiswaModel siswa = SiswaModel.findById(ID);
             Base.close();
 
-            Nama.setText(siswa.getString("no_pembiayaan"));
-            Nis.setText(siswa.getString("nama"));
-            if (siswa.getString("kelamin").equals("Laki-Laki")) {
+            Nama.setText(siswa.getString("nama"));
+            Nis.setText(siswa.getString("nis"));
+            if (siswa.getString("jenis_kelamin").equals("Laki-Laki")) {
                 Laki.setSelected(true);
                 Perempuan.setSelected(false); 
             } else {
