@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Tue, 27 Aug 2019 09:09:45 +0200
+-- Date: Tue, 27 Aug 2019 09:52:57 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -63,7 +63,7 @@ CREATE TABLE `kelas` (
   PRIMARY KEY (`id`),
   KEY `id_siswa` (`id_siswa`),
   CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `kelas` (
 LOCK TABLES `kelas` WRITE;
 /*!40000 ALTER TABLE `kelas` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `kelas` VALUES (1,2,'1A','2019/2020',100000,200000,300000,400000),(2,1,'2C','2017/2018',123345,236585,237345,589343);
+INSERT INTO `kelas` VALUES (1,1,'1A','2019/2020',100000,200000,300000,400000),(2,2,'2C','2017/2018',123345,236585,237345,589343);
 /*!40000 ALTER TABLE `kelas` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -128,7 +128,7 @@ CREATE TABLE `spp` (
   PRIMARY KEY (`id`),
   KEY `id_siswa` (`id_siswa`),
   CONSTRAINT `spp_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,11 +138,12 @@ CREATE TABLE `spp` (
 LOCK TABLES `spp` WRITE;
 /*!40000 ALTER TABLE `spp` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `spp` VALUES (1,1,'2019-08-01',200000,400000,500000,200000),(2,2,'2019-08-10',300000,100000,700000,100000);
 /*!40000 ALTER TABLE `spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `spp` with 0 row(s)
+-- Dumped table `spp` with 2 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -154,4 +155,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 27 Aug 2019 09:09:45 +0200
+-- Dump completed on: Tue, 27 Aug 2019 09:52:57 +0200
