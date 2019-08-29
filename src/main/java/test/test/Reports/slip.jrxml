@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="slip" language="groovy" pageWidth="671" pageHeight="595" orientation="Landscape" columnWidth="631" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="887d4e97-fd52-4b48-ac18-53795aa4ffa2">
-	<property name="ireport.zoom" value="0.8264462809917371"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="slip" language="groovy" pageWidth="671" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="631" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="887d4e97-fd52-4b48-ac18-53795aa4ffa2">
+	<property name="ireport.zoom" value="1.0000000000000024"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="31"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -64,6 +64,9 @@
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="20" width="18" height="20" uuid="9d50cfb7-15bd-4e35-b27f-56a23b0bf234"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[No.]]></text>
 			</staticText>
 			<rectangle>
@@ -71,6 +74,9 @@
 			</rectangle>
 			<staticText>
 				<reportElement x="18" y="20" width="375" height="20" uuid="e7e5a5d3-c12d-44e3-bd87-febaf5c197c3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[U R A I A N]]></text>
 			</staticText>
 			<rectangle>
@@ -78,7 +84,95 @@
 			</rectangle>
 			<staticText>
 				<reportElement x="393" y="20" width="238" height="20" uuid="cc015c75-88bc-423b-b566-bfd142e3f235"/>
-				<text><![CDATA[jUMLAH]]></text>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUMLAH]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="40" width="18" height="20" uuid="0d9f5f5f-8709-44d9-b5de-0cc7f2053a83"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="40" width="18" height="20" uuid="696face0-6b7a-4f0b-9037-ece4c8bca3ec"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="60" width="18" height="20" uuid="b7ff62ab-8050-424e-bfbb-d1d3f8b71a3f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="60" width="18" height="20" uuid="f918b236-1b0e-4087-84fa-9a8b77b1b44b"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="80" width="18" height="20" uuid="8b667288-8792-4750-950d-596767ec3f10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="80" width="18" height="20" uuid="3e5a36a5-ee35-42be-99b6-1a51b9ca85c6"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="100" width="18" height="20" uuid="1686b446-5848-4f7d-98ba-77b5de56dc36"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="100" width="18" height="20" uuid="bccaadd4-1e93-4d66-83d4-5eb5a569ef02"/>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="18" y="40" width="375" height="20" uuid="4a092b7a-fa86-40f7-b175-f66f467f2472"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="40" width="375" height="20" uuid="815457d8-1e89-44f0-9d62-774b46fdadfd"/>
+				<text><![CDATA[Uang SPP]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="18" y="60" width="375" height="20" uuid="3306522f-6a6e-4f04-bbbd-e37c8ebedd7c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="60" width="375" height="20" uuid="99663ec3-bffc-44ae-81e2-459052dd2b4b"/>
+				<text><![CDATA[Uang Operasional]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="18" y="80" width="375" height="20" uuid="b49d730e-5c1a-4de6-b7ee-863e42d9392e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="80" width="375" height="20" uuid="3c45a066-53a5-4625-ab67-995a2ea932e5"/>
+				<text><![CDATA[Uang Beras]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="18" y="100" width="375" height="20" uuid="45f6c262-1d42-4a65-b695-fd9e4a8ff5ce"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="100" width="375" height="20" uuid="c717d8be-a401-4498-82ab-1bdbb7a853df"/>
+				<text><![CDATA[Uang Daftar Ulang]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="393" y="40" width="238" height="20" uuid="6a0cd0e2-32b8-47fd-9f98-8bb17bcbcfaf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="393" y="60" width="238" height="20" uuid="ecc796d0-2c52-4643-ac8a-328fc1428600"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="393" y="80" width="238" height="20" uuid="4acae3ad-374e-4eea-b129-8e70390ba4fc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="393" y="100" width="238" height="20" uuid="6e033d5a-05a9-48aa-af17-d230f46c4b34"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="393" y="0" width="34" height="20" uuid="5bab2f6c-cdb5-4316-90a9-8248c4ee27f3"/>
+				<text><![CDATA[Kelas : ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="393" y="120" width="238" height="20" uuid="d235a420-0399-4973-91c5-4e4c860b039f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="120" width="393" height="20" uuid="a3af1d23-3d2d-4691-b41f-9cd70c63a8e4"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="339" y="120" width="54" height="20" uuid="70b2a2af-9710-4914-a8f1-6009b89a71f1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUMLAH]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
