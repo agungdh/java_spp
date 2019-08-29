@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="slip" language="groovy" pageWidth="671" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="631" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="887d4e97-fd52-4b48-ac18-53795aa4ffa2">
 	<property name="ireport.zoom" value="1.0000000000000024"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="31"/>
+	<property name="ireport.y" value="153"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -26,22 +26,22 @@
 	<title>
 		<band height="130" splitType="Stretch">
 			<staticText>
-				<reportElement x="170" y="24" width="223" height="20" uuid="0e6908ff-faa1-4084-8301-847e5f6c5671"/>
+				<reportElement x="235" y="24" width="223" height="20" uuid="0e6908ff-faa1-4084-8301-847e5f6c5671"/>
 				<textElement>
 					<font size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PONDOK PESANTREN ISLAM AL MUHSIN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="44" width="307" height="20" uuid="881d43d5-f017-45ed-a695-67b1ab7ea7d0"/>
+				<reportElement x="197" y="44" width="307" height="20" uuid="881d43d5-f017-45ed-a695-67b1ab7ea7d0"/>
 				<text><![CDATA[Alamat : Jl. Dr. Sutomo 28 B Purwosari Metro Utara Kota Metro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="197" y="64" width="223" height="20" uuid="62294e69-7de9-40ca-9b26-d5d6246db233"/>
+				<reportElement x="235" y="64" width="223" height="20" uuid="62294e69-7de9-40ca-9b26-d5d6246db233"/>
 				<text><![CDATA[Telp. (0726) 7850267 - 7850173 - 7851099]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="197" y="84" width="153" height="20" uuid="dfd26b3c-353a-47af-aea1-8191a97455db"/>
+				<reportElement x="274" y="84" width="153" height="20" uuid="dfd26b3c-353a-47af-aea1-8191a97455db"/>
 				<textElement>
 					<font size="15" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -54,7 +54,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="250">
+		<band height="316">
 			<staticText>
 				<reportElement x="0" y="0" width="34" height="20" uuid="7548ba07-3722-45ec-982c-69bff46fb85a"/>
 				<text><![CDATA[Nama : ]]></text>
@@ -172,8 +172,38 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[JUMLAH]]></text>
+				<text><![CDATA[TOTAL]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="161" width="139" height="20" uuid="498a36dc-9959-4a4a-ba57-e9975ef62c45"/>
+				<text><![CDATA[1. Putih (Arsip)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="181" width="139" height="20" uuid="2e43e8ac-6ea8-4716-a179-7535cee8a7c5"/>
+				<text><![CDATA[2. Kuning (Pembayar)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="201" width="139" height="20" uuid="df8e4e05-282b-4aa7-9644-4d47a7bcbec8"/>
+				<text><![CDATA[3. Merah (Bendahara Pondok)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="161" width="52" height="20" uuid="7012373e-c289-4d47-a105-fc1fb69f7807"/>
+				<text><![CDATA[Purwosari, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="181" width="78" height="20" uuid="b2fd4dc4-8bb1-47fb-b88d-280a2dc41dda"/>
+				<text><![CDATA[Pembayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="181" width="78" height="20" uuid="54de198a-ff90-4d06-a25c-f2d8dac2c7e9"/>
+				<text><![CDATA[Penerima]]></text>
+			</staticText>
+			<line>
+				<reportElement x="200" y="274" width="129" height="1" uuid="010ac24f-2570-457a-9dfc-dbc0794be450"/>
+			</line>
+			<line>
+				<reportElement x="458" y="273" width="129" height="1" uuid="27e7d011-5614-4abf-981f-95d3b74e3d85"/>
+			</line>
 		</band>
 	</pageHeader>
 </jasperReport>
