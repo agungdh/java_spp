@@ -41,12 +41,7 @@ import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 import org.javalite.activejdbc.LazyList;
 import test.test.Helpers.ADHhelper;
-import test.test.Models.JabatanModel;
-
-import test.test.Models.GajiModel;
-import test.test.Models.KaryawanModel;
 import test.test.Models.KelasModel;
-import test.test.Models.PembiayaanModel;
 import test.test.Models.SiswaModel;
 import test.test.Models.SppModel;
 import test.test.Reports.Config;
@@ -168,6 +163,8 @@ public class SPP extends javax.swing.JFrame {
         Base.close();
         
         TablePegawai.setModel(model);
+        
+        Cetak.setEnabled(false);
         
         setState("index");
     }
@@ -302,6 +299,7 @@ public class SPP extends javax.swing.JFrame {
         Daftar = new javax.swing.JSpinner();
         Beras = new javax.swing.JSpinner();
         Tanggal = new com.toedter.calendar.JDateChooser();
+        Cetak = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SPP");
@@ -432,6 +430,14 @@ public class SPP extends javax.swing.JFrame {
 
         Tanggal.setDateFormatString("dd-MM-yyyy");
 
+        Cetak.setText("Cetak");
+        Cetak.setEnabled(false);
+        Cetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CetakActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -465,32 +471,35 @@ public class SPP extends javax.swing.JFrame {
                                     .addComponent(Nis, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                                     .addComponent(Kelamin))))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(LabelCari6, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                            .addComponent(LabelCari7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Spp, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(Tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(LabelCari9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(LabelCari8, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                            .addComponent(LabelCari10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(ButtonTambahUbah)
-                        .addGap(44, 44, 44)
-                        .addComponent(ButtonRefresh)
-                        .addGap(51, 51, 51)
-                        .addComponent(ButtonResetHapus)
-                        .addGap(158, 158, 158)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ButtonTambahUbah)
+                                .addGap(44, 44, 44)
+                                .addComponent(ButtonRefresh)
+                                .addGap(51, 51, 51)
+                                .addComponent(ButtonResetHapus)
+                                .addGap(158, 158, 158))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(LabelCari6, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                                    .addComponent(LabelCari7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Spp, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(Tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(LabelCari9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(LabelCari8, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                    .addComponent(LabelCari10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -542,7 +551,8 @@ public class SPP extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonTambahUbah)
                     .addComponent(ButtonRefresh)
-                    .addComponent(ButtonResetHapus))
+                    .addComponent(ButtonResetHapus)
+                    .addComponent(Cetak))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -586,6 +596,8 @@ public class SPP extends javax.swing.JFrame {
             Beras.setValue(spp.getInteger("beras"));
             Daftar.setValue(spp.getInteger("daftar_ulang"));
             Siswa.setSelectedIndex(comboSiswaID.indexOf(Integer.parseInt(spp.getString("id_siswa"))));
+            
+            Cetak.setEnabled(true);
             
             setState("edit");
         }
@@ -646,6 +658,10 @@ public class SPP extends javax.swing.JFrame {
             selectedComboSiswaIndex = comboSiswaID.get(comboSiswaIndex);
         }
     }//GEN-LAST:event_SiswaActionPerformed
+
+    private void CetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CetakActionPerformed
+        JOptionPane.showMessageDialog(null, ID);
+    }//GEN-LAST:event_CetakActionPerformed
 
     /**
      * @param args the command line arguments
@@ -942,6 +958,7 @@ public class SPP extends javax.swing.JFrame {
     private javax.swing.JButton ButtonRefresh;
     private javax.swing.JButton ButtonResetHapus;
     private javax.swing.JButton ButtonTambahUbah;
+    private javax.swing.JToggleButton Cetak;
     private javax.swing.JSpinner Daftar;
     private javax.swing.JTextField Kelamin;
     private javax.swing.JLabel LabelCari;

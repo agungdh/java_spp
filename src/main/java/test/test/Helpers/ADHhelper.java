@@ -11,13 +11,53 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.Months;
 
 /**
  *
  * @author user
  */
 public class ADHhelper {
+    public static Calendar dateToCalendar(Date tanggalParam) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(tanggalParam);
+        
+        return cal;
+    }
+
+    public static Date dateTambahBulan(Date tanggalParam, int bulan) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(tanggalParam);
+        cal.add(Calendar.MONTH, bulan);
+        
+        return cal.getTime();
+    }
+    
+    public static int dateMonthBetween(Date tanggalParam1, Date tanggalParam2) {
+        DateTime dt1 = new DateTime(tanggalParam1);
+        DateTime dt2 = new DateTime(tanggalParam2);
+        
+        return Months.monthsBetween(dt1, dt2).getMonths();
+    }
+    
+    public static int dateGetDay(Date tanggalParam) {
+        Calendar cal = dateToCalendar(tanggalParam);
+        return cal.get(Calendar.DATE);
+    }
+
+    public static int dateGetMonth(Date tanggalParam) {
+        Calendar cal = dateToCalendar(tanggalParam);
+        return cal.get(Calendar.MONTH);
+    }
+
+    public static int dateGetYear(Date tanggalParam) {
+        Calendar cal = dateToCalendar(tanggalParam);
+        return cal.get(Calendar.YEAR);
+    }
+    
     public static void d(String string, boolean pembatas) {
         if (!pembatas) {
             out.println(string);
