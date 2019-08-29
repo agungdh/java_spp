@@ -660,7 +660,43 @@ public class SPP extends javax.swing.JFrame {
     }//GEN-LAST:event_SiswaActionPerformed
 
     private void CetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CetakActionPerformed
-        JOptionPane.showMessageDialog(null, ID);
+        Base.open();
+        SppModel spp = SppModel.findById(ID);
+        SiswaModel siswa = spp.parent(SiswaModel.class);
+        Base.close();
+        
+        String nama_ = siswa.getString("nama");
+        int spp_ = spp.getInteger("spp");
+        int operasional_ = spp.getInteger("operasional");
+        int beras_ = spp.getInteger("beras");
+        int daftar_ = spp.getInteger("daftar_ulang");
+        int total_ = spp_ + operasional_ + beras_ + daftar_;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String tanggal_ = formatter.format(new Date());
+        
+        try{
+            Config objkoneksi = new Config();
+            Connection con = objkoneksi.bukakoneksi();
+            String fileName="src/main/java/test/test/Reports/slip.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/slip.jasper";
+            JasperCompileManager.compileReport(fileName);
+            
+            Map param= new HashMap();
+            param.put("spp", ADHhelper.rupiah(spp_));
+            param.put("operasional", ADHhelper.rupiah(operasional_));
+            param.put("beras", ADHhelper.rupiah(beras_));
+            param.put("daftar", ADHhelper.rupiah(daftar_));
+            param.put("total", ADHhelper.rupiah(total_));
+            param.put("nama", nama_);
+            param.put("tanggal", tanggal_);
+                        
+            JasperFillManager.fillReport(filetoFill, param, con);
+            JasperPrint jp=JasperFillManager.fillReport(filetoFill, param,con);
+            JasperViewer.viewReport(jp,false);
+
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_CetakActionPerformed
 
     /**
