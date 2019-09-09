@@ -14,9 +14,9 @@ import org.javalite.activejdbc.annotations.Table;
  *
  * @author user
  */
-@Table("spp")
+@Table("bayar_spp")
 @BelongsToParents({ 
-    @BelongsTo(parent = KelasModel.class, foreignKeyName = "id_kelas"),
-    @BelongsTo(parent = TahunAjaranModel.class, foreignKeyName = "id_tahun_ajaran")
+    @BelongsTo(parent = SppModel.class, foreignKeyName = "id_spp"),
+    @BelongsTo(parent = SiswaModel.class, foreignKeyName = "id_siswa")
 }) 
-public class SppModel extends Model {}
+public class BayarSPPModel extends Model {}

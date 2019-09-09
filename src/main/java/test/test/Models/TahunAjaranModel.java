@@ -7,16 +7,11 @@ package test.test.Models;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
-import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
 
 /**
  *
  * @author user
  */
-@Table("spp")
-@BelongsToParents({ 
-    @BelongsTo(parent = KelasModel.class, foreignKeyName = "id_kelas"),
-    @BelongsTo(parent = TahunAjaranModel.class, foreignKeyName = "id_tahun_ajaran")
-}) 
-public class SppModel extends Model {}
+@Table("tahun_ajaran")
+public class TahunAjaranModel extends Model {}

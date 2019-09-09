@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Thu, 29 Aug 2019 09:18:11 +0200
+-- Date: Mon, 09 Sep 2019 22:53:34 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,6 +46,39 @@ COMMIT;
 --
 
 --
+-- Table structure for table `bayar_spp`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bayar_spp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_spp` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_spp` (`id_spp`),
+  KEY `id_siswa` (`id_siswa`),
+  CONSTRAINT `bayar_spp_ibfk_1` FOREIGN KEY (`id_spp`) REFERENCES `spp` (`id`),
+  CONSTRAINT `bayar_spp_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bayar_spp`
+--
+
+LOCK TABLES `bayar_spp` WRITE;
+/*!40000 ALTER TABLE `bayar_spp` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `bayar_spp` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `bayar_spp` with 0 row(s)
+--
+
+--
 -- Table structure for table `kelas`
 --
 
@@ -53,16 +86,8 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kelas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_siswa` int(11) NOT NULL,
-  `nama` varchar(191) NOT NULL,
-  `tahun_pelajaran` varchar(191) NOT NULL,
-  `spp` int(11) NOT NULL,
-  `operasional` int(11) NOT NULL,
-  `beras` int(11) NOT NULL,
-  `daftar_ulang` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_siswa` (`id_siswa`),
-  CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
+  `kelas` varchar(191) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,12 +98,11 @@ CREATE TABLE `kelas` (
 LOCK TABLES `kelas` WRITE;
 /*!40000 ALTER TABLE `kelas` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `kelas` VALUES (1,1,'1A','2019/2020',100000,200000,300000,400000),(2,2,'2C','2017/2018',123345,236585,237345,589343);
 /*!40000 ALTER TABLE `kelas` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `kelas` with 2 row(s)
+-- Dumped table `kelas` with 0 row(s)
 --
 
 --
@@ -93,7 +117,7 @@ CREATE TABLE `siswa` (
   `nis` varchar(191) NOT NULL,
   `jenis_kelamin` varchar(191) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,15 +143,17 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `spp` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_siswa` int(11) NOT NULL,
-  `tanggal` date NOT NULL,
+  `id_kelas` int(11) NOT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL,
   `spp` int(11) NOT NULL,
   `operasional` int(11) NOT NULL,
   `beras` int(11) NOT NULL,
   `daftar_ulang` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_siswa` (`id_siswa`),
-  CONSTRAINT `spp_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
+  KEY `id_kelas` (`id_kelas`),
+  KEY `id_tahun_ajaran` (`id_tahun_ajaran`),
+  CONSTRAINT `spp_ibfk_2` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id`),
+  CONSTRAINT `spp_ibfk_3` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -138,12 +164,38 @@ CREATE TABLE `spp` (
 LOCK TABLES `spp` WRITE;
 /*!40000 ALTER TABLE `spp` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `spp` VALUES (1,1,'2019-08-01',200000,400000,500000,200000),(2,2,'2019-08-10',300000,100000,700000,100000);
 /*!40000 ALTER TABLE `spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `spp` with 2 row(s)
+-- Dumped table `spp` with 0 row(s)
+--
+
+--
+-- Table structure for table `tahun_ajaran`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tahun_ajaran` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tahun_ajaran` varchar(191) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tahun_ajaran`
+--
+
+LOCK TABLES `tahun_ajaran` WRITE;
+/*!40000 ALTER TABLE `tahun_ajaran` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `tahun_ajaran` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `tahun_ajaran` with 0 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -155,4 +207,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Thu, 29 Aug 2019 09:18:11 +0200
+-- Dump completed on: Mon, 09 Sep 2019 22:53:34 +0200
