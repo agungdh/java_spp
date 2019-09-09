@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Mon, 09 Sep 2019 22:53:34 +0200
+-- Date: Mon, 09 Sep 2019 23:02:53 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -88,7 +88,7 @@ CREATE TABLE `kelas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kelas` varchar(191) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,11 +98,12 @@ CREATE TABLE `kelas` (
 LOCK TABLES `kelas` WRITE;
 /*!40000 ALTER TABLE `kelas` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `kelas` VALUES (7,'I'),(8,'II'),(9,'III');
 /*!40000 ALTER TABLE `kelas` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `kelas` with 0 row(s)
+-- Dumped table `kelas` with 3 row(s)
 --
 
 --
@@ -181,7 +182,7 @@ CREATE TABLE `tahun_ajaran` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tahun_ajaran` varchar(191) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,11 +192,12 @@ CREATE TABLE `tahun_ajaran` (
 LOCK TABLES `tahun_ajaran` WRITE;
 /*!40000 ALTER TABLE `tahun_ajaran` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `tahun_ajaran` VALUES (6,'2018/2019'),(7,'2019/2020');
 /*!40000 ALTER TABLE `tahun_ajaran` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `tahun_ajaran` with 0 row(s)
+-- Dumped table `tahun_ajaran` with 2 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -207,4 +209,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Mon, 09 Sep 2019 22:53:34 +0200
+-- Dump completed on: Mon, 09 Sep 2019 23:02:53 +0200
