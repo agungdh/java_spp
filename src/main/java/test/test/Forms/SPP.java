@@ -203,20 +203,26 @@ public class SPP extends javax.swing.JFrame {
         }
     }
     
-    private void tambahData() {
+    private void tambahData() {        
         Base.open();
-        try {
-            SppModel spp = new SppModel();
-            spp.set("id_kelas", selectedComboKelasIndex);
-            spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
-            spp.set("spp", Spp.getValue());
-            spp.set("operasional", Operasional.getValue());
-            spp.set("beras", Beras.getValue());
-            spp.set("daftar_ulang", Daftar.getValue());
-            spp.save();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        LazyList<SppModel> cek = SppModel.where("id_kelas = ? AND id_tahun_ajaran = ?", selectedComboKelasIndex, selectedComboTahunAjaranIndex);
+        if (cek.size() > 0) {
+            JOptionPane.showMessageDialog(null, "SPP untuk Kelas dan Tahun Ajaran terpilih sudah ada !!!");
+        } else {
+            try {
+                SppModel spp = new SppModel();
+                spp.set("id_kelas", selectedComboKelasIndex);
+                spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
+                spp.set("spp", Spp.getValue());
+                spp.set("operasional", Operasional.getValue());
+                spp.set("beras", Beras.getValue());
+                spp.set("daftar_ulang", Daftar.getValue());
+                spp.save();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
         }
+        
         Base.close();
     }
     
@@ -224,13 +230,18 @@ public class SPP extends javax.swing.JFrame {
         Base.open();
         try {
             SppModel spp = SppModel.findById(ID);
-            spp.set("id_kelas", selectedComboKelasIndex);
-            spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
-            spp.set("spp", Spp.getValue());
-            spp.set("operasional", Operasional.getValue());
-            spp.set("beras", Beras.getValue());
-            spp.set("daftar_ulang", Daftar.getValue());
-            spp.save();
+            LazyList<SppModel> cek = SppModel.where("id_kelas = ? AND id_tahun_ajaran = ?", selectedComboKelasIndex, selectedComboTahunAjaranIndex);
+            if ((spp.getInteger("id_kelas") == selectedComboKelasIndex && spp.getInteger("id_kelas") == selectedComboKelasIndex) || cek.size() == 0) {
+                spp.set("id_kelas", selectedComboKelasIndex);
+                spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
+                spp.set("spp", Spp.getValue());
+                spp.set("operasional", Operasional.getValue());
+                spp.set("beras", Beras.getValue());
+                spp.set("daftar_ulang", Daftar.getValue());
+                spp.save();
+            } else {
+                JOptionPane.showMessageDialog(null, "SPP untuk Kelas dan Tahun Ajaran terpilih sudah ada !!!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
