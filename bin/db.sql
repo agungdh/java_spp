@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Mon, 09 Sep 2019 23:02:53 +0200
+-- Date: Tue, 10 Sep 2019 07:32:07 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -155,7 +155,7 @@ CREATE TABLE `spp` (
   KEY `id_tahun_ajaran` (`id_tahun_ajaran`),
   CONSTRAINT `spp_ibfk_2` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id`),
   CONSTRAINT `spp_ibfk_3` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,11 +165,12 @@ CREATE TABLE `spp` (
 LOCK TABLES `spp` WRITE;
 /*!40000 ALTER TABLE `spp` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `spp` VALUES (5,7,6,12410,410,141240,1241241240),(6,8,6,124124120,41241240,12412410,124140);
 /*!40000 ALTER TABLE `spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `spp` with 0 row(s)
+-- Dumped table `spp` with 2 row(s)
 --
 
 --
@@ -209,4 +210,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Mon, 09 Sep 2019 23:02:53 +0200
+-- Dump completed on: Tue, 10 Sep 2019 07:32:07 +0200

@@ -8,6 +8,8 @@ package test.test.Forms;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
@@ -42,29 +44,24 @@ import test.test.Helpers.ADHhelper;
 import test.test.Models.KelasModel;
 import test.test.Models.SiswaModel;
 import test.test.Models.SppModel;
-import test.test.Models.TahunAjaranModel;
 import test.test.Reports.Config;
 
 /**
  *
  * @author user
  */
-public class SPP extends javax.swing.JFrame {
-    private List<Integer> comboKelasID = new ArrayList<Integer>();
-    private int comboKelasIndex;
-    private int selectedComboKelasIndex;
-
-    private List<Integer> comboTahunAjaranID = new ArrayList<Integer>();
-    private int comboTahunAjaranIndex;
-    private int selectedComboTahunAjaranIndex;
-
+public class SPPOld extends javax.swing.JFrame {
+    private List<Integer> comboSiswaID = new ArrayList<Integer>();
+    private int comboSiswaIndex;
+    private int selectedComboSiswaIndex;
+    
     private DefaultTableModel model = new DefaultTableModel();
     private String ID;
     private String state;
     /**
      * Creates new form PangkatGol
      */
-    public SPP() {
+    public SPPOld() {
         initComponents();
                 
         loadTable();
@@ -86,25 +83,39 @@ public class SPP extends javax.swing.JFrame {
         
         loadComboBox();
         
+        selectKode();
+        Siswa.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                selectKode();
+            }
+        });
+        
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
     
-    public void loadComboBox() {
-        Kelas.removeAllItems();
-        Tahun.removeAllItems();
+    public void selectKode() {
+        comboSiswaIndex = Siswa.getSelectedIndex();
+        if (comboSiswaIndex >= 0) {
+            selectedComboSiswaIndex = comboSiswaID.get(comboSiswaIndex);
 
-        Base.open();
-        LazyList<KelasModel> kelass = KelasModel.findAll();
-        LazyList<TahunAjaranModel> tahunAjarans = TahunAjaranModel.findAll();
-        
-        for(KelasModel kelas : kelass) {
-            comboKelasID.add(Integer.parseInt(kelas.getString("id")));
-            Kelas.addItem(kelas.getString("kelas"));
+            Base.open();
+            SiswaModel p = SiswaModel.findById(selectedComboSiswaIndex);
+            Base.close();
+
+            Nama.setText(p.getString("nama"));
+            Nis.setText(p.getString("nis"));
+            Kelamin.setText(p.getString("jenis_kelamin"));
         }
-
-        for(TahunAjaranModel tahunAjaran : tahunAjarans) {
-            comboTahunAjaranID.add(Integer.parseInt(tahunAjaran.getString("id")));
-            Tahun.addItem(tahunAjaran.getString("tahun_ajaran"));
+    }
+    
+    public void loadComboBox() {
+        Siswa.removeAllItems();
+        Base.open();
+        LazyList<SiswaModel> siswas = SiswaModel.findAll();
+        
+        for(SiswaModel siswa : siswas) {
+            comboSiswaID.add(Integer.parseInt(siswa.getString("id")));
+            Siswa.addItem(siswa.getString("nama"));
         }
 
         Base.close();
@@ -122,27 +133,28 @@ public class SPP extends javax.swing.JFrame {
         model = new DefaultTableModel();
                 
         model.addColumn("#ID");
-        model.addColumn("Kelas");
-        model.addColumn("Tahun Ajaran");
+        model.addColumn("NIS Siswa");
+        model.addColumn("Nama Siswa");
+        model.addColumn("Tanggal");
         model.addColumn("Uang SPP");
         model.addColumn("Uang Operasional");
         model.addColumn("Uang Beras");
-        model.addColumn("Uang Daftar Ulang");
+        model.addColumn("Daftar Ulang");
         
         Base.open();
         
         try {
             for(SppModel spp : spps) {
-                KelasModel kelas = spp.parent(KelasModel.class);                
-                TahunAjaranModel tahunAjaran = spp.parent(TahunAjaranModel.class);                
+                SiswaModel siswa = spp.parent(SiswaModel.class);                
                 model.addRow(new Object[]{
                     spp.getId(),
-                    kelas.getString("kelas"),
-                    tahunAjaran.getString("tahun_ajaran"),
+                    siswa.getString("nis"),
+                    siswa.getString("nama"),
+                    ADHhelper.tanggalIndo(spp.getString("tanggal")),
                     ADHhelper.rupiah(spp.getInteger("spp")),
                     ADHhelper.rupiah(spp.getInteger("operasional")),
                     ADHhelper.rupiah(spp.getInteger("beras")),
-                    ADHhelper.rupiah(spp.getInteger("daftar_ulang")),
+                    ADHhelper.rupiah(spp.getInteger("daftar_ulang"))
                 });
             }
         } catch (Exception e) {
@@ -151,6 +163,8 @@ public class SPP extends javax.swing.JFrame {
         Base.close();
         
         TablePegawai.setModel(model);
+        
+        Cetak.setEnabled(false);
         
         setState("index");
     }
@@ -169,7 +183,7 @@ public class SPP extends javax.swing.JFrame {
 
     private void loadTable(String cari) {
         Base.open();
-        LazyList<SppModel> spps = SppModel.findBySQL("SELECT s.* FROM spp s, kelas k, tahun_ajaran t WHERE s.id_kelas = k.id AND s.id_tahun_ajaran = t.id AND (k.kelas LIKE ? OR t.tahun_ajaran LIKE ?)", '%' + cari + '%', '%' + cari + '%');
+        LazyList<SppModel> spps = SppModel.findBySQL("SELECT k.* FROM spp k, siswa s WHERE k.id_siswa = s.id AND (s.nis like ? OR s.nama like ?)", '%' + cari + '%', '%' + cari + '%');
         Base.close();
         
         loadTableHelper(spps);
@@ -207,8 +221,8 @@ public class SPP extends javax.swing.JFrame {
         Base.open();
         try {
             SppModel spp = new SppModel();
-            spp.set("id_kelas", selectedComboKelasIndex);
-            spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
+            spp.set("id_siswa", selectedComboSiswaIndex);
+            spp.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
             spp.set("spp", Spp.getValue());
             spp.set("operasional", Operasional.getValue());
             spp.set("beras", Beras.getValue());
@@ -224,8 +238,8 @@ public class SPP extends javax.swing.JFrame {
         Base.open();
         try {
             SppModel spp = SppModel.findById(ID);
-            spp.set("id_kelas", selectedComboKelasIndex);
-            spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
+            spp.set("id_siswa", selectedComboSiswaIndex);
+            spp.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
             spp.set("spp", Spp.getValue());
             spp.set("operasional", Operasional.getValue());
             spp.set("beras", Beras.getValue());
@@ -238,8 +252,11 @@ public class SPP extends javax.swing.JFrame {
     }
 
     private void resetForm() {
-        Kelas.setSelectedIndex(0);
-        Tahun.setSelectedIndex(0);
+        Siswa.setSelectedIndex(0);
+        Nama.setText("");
+        Nis.setText("");
+        Kelamin.setText("");
+        Tanggal.setDate(null);
         Spp.setValue(0);
         Operasional.setValue(0);
         Beras.setValue(0);
@@ -259,23 +276,30 @@ public class SPP extends javax.swing.JFrame {
         TablePegawai = new javax.swing.JTable();
         TextCari = new javax.swing.JTextField();
         LabelCari = new javax.swing.JLabel();
+        Nama = new javax.swing.JTextField();
+        LabelCari1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ButtonRefresh = new javax.swing.JButton();
         ButtonTambahUbah = new javax.swing.JButton();
         ButtonResetHapus = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        LabelCari2 = new javax.swing.JLabel();
+        Nis = new javax.swing.JTextField();
+        LabelCari3 = new javax.swing.JLabel();
+        Kelamin = new javax.swing.JTextField();
+        LabelCari4 = new javax.swing.JLabel();
+        Siswa = new javax.swing.JComboBox<>();
+        LabelCari6 = new javax.swing.JLabel();
+        LabelCari7 = new javax.swing.JLabel();
         Spp = new javax.swing.JSpinner();
+        LabelCari8 = new javax.swing.JLabel();
+        LabelCari9 = new javax.swing.JLabel();
+        LabelCari10 = new javax.swing.JLabel();
         Operasional = new javax.swing.JSpinner();
-        Beras = new javax.swing.JSpinner();
         Daftar = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        Kelas = new javax.swing.JComboBox<>();
-        Tahun = new javax.swing.JComboBox<>();
+        Beras = new javax.swing.JSpinner();
+        Tanggal = new com.toedter.calendar.JDateChooser();
+        Cetak = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SPP");
@@ -308,7 +332,16 @@ public class SPP extends javax.swing.JFrame {
             }
         });
 
-        LabelCari.setText("Cari");
+        LabelCari.setText("Cari (NIS/Nama)");
+
+        Nama.setEditable(false);
+        Nama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NamaActionPerformed(evt);
+            }
+        });
+
+        LabelCari1.setText("Nama");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -322,14 +355,14 @@ public class SPP extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(339, 339, 339))
+                .addGap(415, 415, 415))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         ButtonRefresh.setText("Refresh");
@@ -353,39 +386,55 @@ public class SPP extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("SPP");
+        LabelCari2.setText("NIS");
 
-        jLabel3.setText("Operasional");
-
-        jLabel4.setText("Beras");
-
-        jLabel5.setText("Daftar Ulang");
-
-        jLabel6.setText("Tahun Ajaran");
-
-        jLabel7.setText("Kelas");
-
-        Kelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Kelas.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                KelasItemStateChanged(evt);
-            }
-        });
-        Kelas.addActionListener(new java.awt.event.ActionListener() {
+        Nis.setEditable(false);
+        Nis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KelasActionPerformed(evt);
+                NisActionPerformed(evt);
             }
         });
 
-        Tahun.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Tahun.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                TahunItemStateChanged(evt);
+        LabelCari3.setText("Jenis Kelamin");
+
+        Kelamin.setEditable(false);
+        Kelamin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KelaminActionPerformed(evt);
             }
         });
-        Tahun.addActionListener(new java.awt.event.ActionListener() {
+
+        LabelCari4.setText("Siswa");
+
+        Siswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Siswa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                SiswaItemStateChanged(evt);
+            }
+        });
+        Siswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TahunActionPerformed(evt);
+                SiswaActionPerformed(evt);
+            }
+        });
+
+        LabelCari6.setText("Tanggal");
+
+        LabelCari7.setText("Uang SPP");
+
+        LabelCari8.setText("Uang Operasional");
+
+        LabelCari9.setText("Uang Beras");
+
+        LabelCari10.setText("Daftar Ulang");
+
+        Tanggal.setDateFormatString("dd-MM-yyyy");
+
+        Cetak.setText("Cetak");
+        Cetak.setEnabled(false);
+        Cetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CetakActionPerformed(evt);
             }
         });
 
@@ -397,79 +446,119 @@ public class SPP extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ScrollPane)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(LabelCari)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(TextCari))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Spp, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Tahun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Kelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(LabelCari1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Nama))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(LabelCari4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Siswa, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelCari2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(LabelCari3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Nis, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                                    .addComponent(Kelamin))))
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(LabelCari)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextCari)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ButtonTambahUbah)
+                                .addGap(44, 44, 44)
+                                .addComponent(ButtonRefresh)
+                                .addGap(51, 51, 51)
+                                .addComponent(ButtonResetHapus)
+                                .addGap(158, 158, 158))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(LabelCari6, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                                    .addComponent(LabelCari7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Spp, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(Tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(LabelCari9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(LabelCari8, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                    .addComponent(LabelCari10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ButtonTambahUbah)
-                .addGap(18, 18, 18)
-                .addComponent(ButtonRefresh)
-                .addGap(41, 41, 41)
-                .addComponent(ButtonResetHapus)
-                .addGap(231, 231, 231))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(Kelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari4)
+                                .addComponent(Siswa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari1)
+                                .addComponent(Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari2)
+                                .addComponent(Nis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari8)
+                                .addComponent(Operasional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari9)
+                                .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCari10)
+                                .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LabelCari6)
+                            .addComponent(Tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LabelCari7)
+                            .addComponent(Spp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Beras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(Tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Daftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel2)
-                    .addComponent(Spp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(LabelCari3)
+                    .addComponent(Kelamin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonTambahUbah)
                     .addComponent(ButtonRefresh)
-                    .addComponent(ButtonResetHapus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(ButtonResetHapus)
+                    .addComponent(Cetak))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelCari))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -497,12 +586,18 @@ public class SPP extends javax.swing.JFrame {
             SppModel spp = SppModel.findById(ID);
             Base.close();
 
+            try {
+                Tanggal.setDate(ADHhelper.getTanggalFromDB(spp.getString("tanggal")));
+            } catch (ParseException ex) {
+                Logger.getLogger(SPPOld.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Spp.setValue(spp.getInteger("spp"));
             Operasional.setValue(spp.getInteger("operasional"));
             Beras.setValue(spp.getInteger("beras"));
             Daftar.setValue(spp.getInteger("daftar_ulang"));
-            Kelas.setSelectedIndex(comboKelasID.indexOf(Integer.parseInt(spp.getString("id_kelas"))));
-            Tahun.setSelectedIndex(comboTahunAjaranID.indexOf(Integer.parseInt(spp.getString("id_tahun_ajaran"))));
+            Siswa.setSelectedIndex(comboSiswaID.indexOf(Integer.parseInt(spp.getString("id_siswa"))));
+            
+            Cetak.setEnabled(true);
             
             setState("edit");
         }
@@ -510,13 +605,21 @@ public class SPP extends javax.swing.JFrame {
 
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
-            tambahData();
-            resetForm();
-            loadTable();
+            if (Tanggal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
+            } else {
+                tambahData();
+                resetForm();
+                loadTable();
+            }
         } else {
-            ubahData();
-            resetForm();
-            loadTable();
+            if (Tanggal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
+            } else {
+                ubahData();
+                resetForm();
+                loadTable();
+            }
         }
     }//GEN-LAST:event_ButtonTambahUbahActionPerformed
 
@@ -533,27 +636,68 @@ public class SPP extends javax.swing.JFrame {
         cari();
     }//GEN-LAST:event_TextCariActionPerformed
 
-    private void KelasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_KelasItemStateChanged
-
-    }//GEN-LAST:event_KelasItemStateChanged
-
-    private void KelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KelasActionPerformed
-        comboKelasIndex = Kelas.getSelectedIndex();
-        if (comboKelasIndex >= 0) {
-            selectedComboKelasIndex = comboKelasID.get(comboKelasIndex);
-        }
-    }//GEN-LAST:event_KelasActionPerformed
-
-    private void TahunItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TahunItemStateChanged
+    private void NamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NamaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TahunItemStateChanged
+    }//GEN-LAST:event_NamaActionPerformed
 
-    private void TahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TahunActionPerformed
-        comboTahunAjaranIndex = Tahun.getSelectedIndex();
-        if (comboTahunAjaranIndex >= 0) {
-            selectedComboTahunAjaranIndex = comboTahunAjaranID.get(comboTahunAjaranIndex);
+    private void NisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NisActionPerformed
+
+    private void KelaminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KelaminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KelaminActionPerformed
+
+    private void SiswaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_SiswaItemStateChanged
+
+    }//GEN-LAST:event_SiswaItemStateChanged
+
+    private void SiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiswaActionPerformed
+        comboSiswaIndex = Siswa.getSelectedIndex();
+        if (comboSiswaIndex >= 0) {
+            selectedComboSiswaIndex = comboSiswaID.get(comboSiswaIndex);
         }
-    }//GEN-LAST:event_TahunActionPerformed
+    }//GEN-LAST:event_SiswaActionPerformed
+
+    private void CetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CetakActionPerformed
+        Base.open();
+        SppModel spp = SppModel.findById(ID);
+        SiswaModel siswa = spp.parent(SiswaModel.class);
+        Base.close();
+        
+        String nama_ = siswa.getString("nama");
+        int spp_ = spp.getInteger("spp");
+        int operasional_ = spp.getInteger("operasional");
+        int beras_ = spp.getInteger("beras");
+        int daftar_ = spp.getInteger("daftar_ulang");
+        int total_ = spp_ + operasional_ + beras_ + daftar_;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String tanggal_ = formatter.format(new Date());
+        
+        try{
+            Config objkoneksi = new Config();
+            Connection con = objkoneksi.bukakoneksi();
+            String fileName="src/main/java/test/test/Reports/slip.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/slip.jasper";
+            JasperCompileManager.compileReport(fileName);
+            
+            Map param= new HashMap();
+            param.put("spp", ADHhelper.rupiah(spp_));
+            param.put("operasional", ADHhelper.rupiah(operasional_));
+            param.put("beras", ADHhelper.rupiah(beras_));
+            param.put("daftar", ADHhelper.rupiah(daftar_));
+            param.put("total", ADHhelper.rupiah(total_));
+            param.put("nama", nama_);
+            param.put("tanggal", tanggal_);
+                        
+            JasperFillManager.fillReport(filetoFill, param, con);
+            JasperPrint jp=JasperFillManager.fillReport(filetoFill, param,con);
+            JasperViewer.viewReport(jp,false);
+
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_CetakActionPerformed
 
     /**
      * @param args the command line arguments
@@ -572,13 +716,13 @@ public class SPP extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SPP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SPPOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SPP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SPPOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SPP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SPPOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SPP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SPPOld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -1096,7 +1240,7 @@ public class SPP extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SPP().setVisible(true);
+                new SPPOld().setVisible(true);
             }
         });
     }
@@ -1106,22 +1250,29 @@ public class SPP extends javax.swing.JFrame {
     private javax.swing.JButton ButtonRefresh;
     private javax.swing.JButton ButtonResetHapus;
     private javax.swing.JButton ButtonTambahUbah;
+    private javax.swing.JToggleButton Cetak;
     private javax.swing.JSpinner Daftar;
-    private javax.swing.JComboBox<String> Kelas;
+    private javax.swing.JTextField Kelamin;
     private javax.swing.JLabel LabelCari;
+    private javax.swing.JLabel LabelCari1;
+    private javax.swing.JLabel LabelCari10;
+    private javax.swing.JLabel LabelCari2;
+    private javax.swing.JLabel LabelCari3;
+    private javax.swing.JLabel LabelCari4;
+    private javax.swing.JLabel LabelCari6;
+    private javax.swing.JLabel LabelCari7;
+    private javax.swing.JLabel LabelCari8;
+    private javax.swing.JLabel LabelCari9;
+    private javax.swing.JTextField Nama;
+    private javax.swing.JTextField Nis;
     private javax.swing.JSpinner Operasional;
     private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JComboBox<String> Siswa;
     private javax.swing.JSpinner Spp;
     private javax.swing.JTable TablePegawai;
-    private javax.swing.JComboBox<String> Tahun;
+    private com.toedter.calendar.JDateChooser Tanggal;
     private javax.swing.JTextField TextCari;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
