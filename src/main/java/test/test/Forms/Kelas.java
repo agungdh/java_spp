@@ -239,6 +239,7 @@ public class Kelas extends javax.swing.JFrame {
             }
         });
 
+        LabelCari.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         LabelCari.setText("Cari");
 
         Kelas.addActionListener(new java.awt.event.ActionListener() {
@@ -247,8 +248,10 @@ public class Kelas extends javax.swing.JFrame {
             }
         });
 
+        LabelCari1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         LabelCari1.setText("Kelas");
 
+        jPanel1.setBackground(new java.awt.Color(102, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -271,6 +274,8 @@ public class Kelas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        ButtonRefresh.setBackground(new java.awt.Color(102, 255, 255));
+        ButtonRefresh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ButtonRefresh.setText("Refresh");
         ButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,6 +283,8 @@ public class Kelas extends javax.swing.JFrame {
             }
         });
 
+        ButtonTambahUbah.setBackground(new java.awt.Color(102, 255, 255));
+        ButtonTambahUbah.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ButtonTambahUbah.setText("Tambah");
         ButtonTambahUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,6 +292,8 @@ public class Kelas extends javax.swing.JFrame {
             }
         });
 
+        ButtonResetHapus.setBackground(new java.awt.Color(102, 255, 255));
+        ButtonResetHapus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ButtonResetHapus.setText("Reset");
         ButtonResetHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +324,7 @@ public class Kelas extends javax.swing.JFrame {
                         .addComponent(LabelCari1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Kelas)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +345,7 @@ public class Kelas extends javax.swing.JFrame {
                     .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelCari))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
