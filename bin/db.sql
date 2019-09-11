@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Wed, 11 Sep 2019 06:08:00 +0200
+-- Date: Wed, 11 Sep 2019 06:44:26 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -61,7 +61,7 @@ CREATE TABLE `bayar_spp` (
   KEY `id_siswa` (`id_siswa`),
   CONSTRAINT `bayar_spp_ibfk_1` FOREIGN KEY (`id_spp`) REFERENCES `spp` (`id`),
   CONSTRAINT `bayar_spp_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,11 +71,12 @@ CREATE TABLE `bayar_spp` (
 LOCK TABLES `bayar_spp` WRITE;
 /*!40000 ALTER TABLE `bayar_spp` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `bayar_spp` VALUES (1,5,1,'2019-09-06'),(2,9,1,'2019-09-05'),(3,8,1,'2019-09-13');
 /*!40000 ALTER TABLE `bayar_spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bayar_spp` with 0 row(s)
+-- Dumped table `bayar_spp` with 3 row(s)
 --
 
 --
@@ -210,4 +211,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Wed, 11 Sep 2019 06:08:00 +0200
+-- Dump completed on: Wed, 11 Sep 2019 06:44:26 +0200

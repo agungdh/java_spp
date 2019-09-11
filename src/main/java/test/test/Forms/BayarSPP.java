@@ -39,6 +39,7 @@ import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 import org.javalite.activejdbc.LazyList;
 import test.test.Helpers.ADHhelper;
+import test.test.Models.BayarSPPModel;
 import test.test.Models.KelasModel;
 import test.test.Models.SiswaModel;
 import test.test.Models.SppModel;
@@ -64,6 +65,10 @@ public class BayarSPP extends javax.swing.JFrame {
     
     private boolean siswaAda;
     private boolean sppAda;
+
+    private int siswaId;
+    private int sppId;    
+    
     private boolean comboLoaded;
     /**
      * Creates new form PangkatGol
@@ -118,6 +123,7 @@ public class BayarSPP extends javax.swing.JFrame {
             Daftar.setText(ADHhelper.rupiah(spp.getInteger("daftar_ulang")));
             
             sppAda = true;
+            sppId = spp.getInteger("id");
         } else {
             Spp.setText("");
             Operasional.setText("");
@@ -125,6 +131,7 @@ public class BayarSPP extends javax.swing.JFrame {
             Daftar.setText("");
             
             sppAda = false;
+            sppId = 0;
         }
         Base.close();
     }
@@ -139,11 +146,13 @@ public class BayarSPP extends javax.swing.JFrame {
             Jenis.setText(siswa.getString("jenis_kelamin"));
             
             siswaAda = true;
+            siswaId = siswa.getInteger("id");
         } else {
             Nama.setText("");
             Jenis.setText("");
             
             siswaAda = false;
+            siswaId = 0;
         }
         Base.close();
     }
@@ -265,26 +274,19 @@ public class BayarSPP extends javax.swing.JFrame {
     }
     
     private void tambahData() {        
-//        Base.open();
-//        LazyList<SppModel> cek = SppModel.where("id_kelas = ? AND id_tahun_ajaran = ?", selectedComboKelasIndex, selectedComboTahunAjaranIndex);
-//        if (cek.size() > 0) {
-//            JOptionPane.showMessageDialog(null, "SPP untuk Kelas dan Tahun Ajaran terpilih sudah ada !!!");
-//        } else {
-//            try {
-//                SppModel spp = new SppModel();
-//                spp.set("id_kelas", selectedComboKelasIndex);
-//                spp.set("id_tahun_ajaran", selectedComboTahunAjaranIndex);
-//                spp.set("spp", Spp.getValue());
-//                spp.set("operasional", Operasional.getValue());
-//                spp.set("beras", Beras.getValue());
-//                spp.set("daftar_ulang", Daftar.getValue());
-//                spp.save();
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, e.getMessage());
-//            }
-//        }
-//        
-//        Base.close();
+        Base.open();
+        
+        try {
+            BayarSPPModel bspp = new BayarSPPModel();
+            bspp.set("id_siswa", siswaId);
+            bspp.set("id_spp", sppId);
+            bspp.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
+            bspp.save();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+        Base.close();
     }
     
     private void ubahData() {
@@ -310,12 +312,10 @@ public class BayarSPP extends javax.swing.JFrame {
     }
 
     private void resetForm() {
-//        Kelas.setSelectedIndex(0);
-//        Tahun.setSelectedIndex(0);
-//        Spp.setValue(0);
-//        Operasional.setValue(0);
-//        Beras.setValue(0);
-//        Daftar.setValue(0);
+        Kelas.setSelectedIndex(0);
+        Tahun.setSelectedIndex(0);
+        Nis.setText("");
+        Tanggal.setDate(null);
     }
 
     /**
@@ -354,6 +354,8 @@ public class BayarSPP extends javax.swing.JFrame {
         Daftar = new javax.swing.JTextField();
         Nama = new javax.swing.JTextField();
         Jenis = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        Tanggal = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pembayaran SPP");
@@ -485,6 +487,10 @@ public class BayarSPP extends javax.swing.JFrame {
 
         Jenis.setEditable(false);
 
+        jLabel11.setText("Tanggal");
+
+        Tanggal.setDateFormatString("dd-MM-yyyy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -509,7 +515,7 @@ public class BayarSPP extends javax.swing.JFrame {
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(Nis, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -551,7 +557,11 @@ public class BayarSPP extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelCari)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TextCari))))
+                                .addComponent(TextCari))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(Tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -577,7 +587,11 @@ public class BayarSPP extends javax.swing.JFrame {
                                 .addComponent(Jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(Spp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11)
+                            .addComponent(Tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9)
                             .addComponent(Nis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -651,9 +665,25 @@ public class BayarSPP extends javax.swing.JFrame {
 
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
-            tambahData();
-            resetForm();
-            loadTable();
+            if (Tanggal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
+            } else {
+                if (siswaAda && sppAda) {
+                    Base.open();
+                    LazyList<BayarSPPModel> bspps = BayarSPPModel.findBySQL("SELECT bs.* FROM bayar_spp bs, spp sp, siswa sw, kelas kl, tahun_ajaran ta WHERE bs.id_spp = sp.id AND bs.id_siswa = sw.id AND sp.id_kelas = kl.id AND sp.id_tahun_ajaran = ta.id AND sw.nis = ? AND kl.id = ? AND ta.id = ?", Nis.getText(), selectedComboKelasIndex, selectedComboTahunAjaranIndex);
+                    int jumlahBspps = bspps.size();
+                    Base.close();
+                    if (jumlahBspps == 0) {
+                        tambahData();
+                        resetForm();
+                        loadTable();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Pembayaran SPP Siswa untuk Kelas dan Tahun Ajaran ini sudah ada !!!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Data Siswa, Kelas dan Tahun Ajaran tidak valid !!!");
+                }
+            }
         } else {
             ubahData();
             resetForm();
@@ -1778,9 +1808,11 @@ public class BayarSPP extends javax.swing.JFrame {
     private javax.swing.JTextField Spp;
     private javax.swing.JTable TablePegawai;
     private javax.swing.JComboBox<String> Tahun;
+    private com.toedter.calendar.JDateChooser Tanggal;
     private javax.swing.JTextField TextCari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
