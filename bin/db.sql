@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Wed, 11 Sep 2019 07:01:04 +0200
+-- Date: Wed, 11 Sep 2019 08:00:44 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -71,12 +71,12 @@ CREATE TABLE `bayar_spp` (
 LOCK TABLES `bayar_spp` WRITE;
 /*!40000 ALTER TABLE `bayar_spp` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `bayar_spp` VALUES (4,5,1,'2019-09-04'),(5,8,1,'2019-09-13'),(6,5,2,'2019-09-05');
+INSERT INTO `bayar_spp` VALUES (4,5,1,'2019-09-04'),(5,8,2,'2019-09-01');
 /*!40000 ALTER TABLE `bayar_spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bayar_spp` with 3 row(s)
+-- Dumped table `bayar_spp` with 2 row(s)
 --
 
 --
@@ -211,4 +211,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Wed, 11 Sep 2019 07:01:04 +0200
+-- Dump completed on: Wed, 11 Sep 2019 08:00:44 +0200
