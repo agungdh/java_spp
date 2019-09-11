@@ -188,10 +188,13 @@ public class BayarSPP extends javax.swing.JFrame {
         }
     }
     
-    private void loadTableHelper(LazyList<SppModel> spps) {
+    private void loadTableHelper(LazyList<BayarSPPModel> bspps) {
         model = new DefaultTableModel();
                 
         model.addColumn("#ID");
+        model.addColumn("Tanggal");
+        model.addColumn("NIS");
+        model.addColumn("Nama");
         model.addColumn("Kelas");
         model.addColumn("Tahun Ajaran");
         model.addColumn("Uang SPP");
@@ -202,11 +205,16 @@ public class BayarSPP extends javax.swing.JFrame {
         Base.open();
         
         try {
-            for(SppModel spp : spps) {
+            for(BayarSPPModel bspp : bspps) {
+                SiswaModel siswa = bspp.parent(SiswaModel.class);                
+                SppModel spp = bspp.parent(SppModel.class);                
                 KelasModel kelas = spp.parent(KelasModel.class);                
                 TahunAjaranModel tahunAjaran = spp.parent(TahunAjaranModel.class);                
                 model.addRow(new Object[]{
                     spp.getId(),
+                    ADHhelper.tanggalIndo(bspp.getString("tanggal")),
+                    siswa.getString("nis"),
+                    siswa.getString("nama"),
                     kelas.getString("kelas"),
                     tahunAjaran.getString("tahun_ajaran"),
                     ADHhelper.rupiah(spp.getInteger("spp")),
@@ -231,18 +239,18 @@ public class BayarSPP extends javax.swing.JFrame {
     
     private void loadTable() {
         Base.open();
-        LazyList<SppModel> spps = SppModel.findAll();
+        LazyList<BayarSPPModel> bspps = BayarSPPModel.findAll();
         Base.close();
         
-        loadTableHelper(spps);
+        loadTableHelper(bspps);
     }
 
     private void loadTable(String cari) {
         Base.open();
-        LazyList<SppModel> spps = SppModel.findBySQL("SELECT s.* FROM spp s, kelas k, tahun_ajaran t WHERE s.id_kelas = k.id AND s.id_tahun_ajaran = t.id AND (k.kelas LIKE ? OR t.tahun_ajaran LIKE ?)", '%' + cari + '%', '%' + cari + '%');
+        LazyList<BayarSPPModel> bspps = BayarSPPModel.findBySQL("SELECT bs.* FROM bayar_spp bs, spp sp, siswa sw, kelas kl, tahun_ajaran ta WHERE bs.id_spp = sp.id AND bs.id_siswa = sw.id AND sp.id_kelas = kl.id AND sp.id_tahun_ajaran = ta.id AND (sw.nis LIKE ? AND sw.nama LIKE ?)", '%' + cari + '%', '%' + cari + '%');
         Base.close();
         
-        loadTableHelper(spps);
+        loadTableHelper(bspps);
     }
 
     
