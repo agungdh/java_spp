@@ -18,8 +18,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 1
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b1, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -28,8 +28,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 2
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b2, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -38,8 +38,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 3
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b3, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -48,8 +48,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 4
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b4, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -58,8 +58,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 5
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b5, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -68,8 +68,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 6
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b6, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -78,8 +78,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 7
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b7, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -88,8 +88,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 8
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b8, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -98,8 +98,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 9
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b9, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -108,8 +108,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 10
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b10, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -118,8 +118,8 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 11
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b11, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -128,15 +128,15 @@
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
         AND bs.bulan = 12
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) b12, (
         SELECT (sp.spp + sp.operasional + sp.beras + sp.daftar_ulang) * 12
         FROM spp sp, kelas kl, tahun_ajaran ta
         WHERE sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
-        AND kl.id = 7
-        AND ta.id = 6
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
     ) seharusnya, (
         SELECT SUM(sp.spp) + SUM(sp.operasional) + SUM(sp.beras) + SUM(sp.daftar_ulang)
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -144,9 +144,28 @@
         AND bs.id_spp = sp.id
         AND sp.id_kelas = kl.id
         AND sp.id_tahun_ajaran = ta.id
-        AND kl.id = 7
-        AND ta.id = 6
-    ) totalbayar
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
+    ) rekap,
+    (
+        SELECT (sp.spp + sp.operasional + sp.beras + sp.daftar_ulang) * 12
+        FROM spp sp, kelas kl, tahun_ajaran ta
+        WHERE sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
+    )
+    -
+    (
+        SELECT SUM(sp.spp) + SUM(sp.operasional) + SUM(sp.beras) + SUM(sp.daftar_ulang)
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND kl.id = $P{id_kelas}
+        AND ta.id = $P{id_tahun_ajaran}
+    ) tunggakan
 FROM siswa sw
 WHERE id IN (SELECT DISTINCT(sw.id) id_siswa
 FROM bayar_spp bs, siswa sw, kelas kl, tahun_ajaran ta, spp sp
@@ -154,8 +173,8 @@ WHERE bs.id_spp = sp.id
 AND bs.id_siswa = sw.id
 AND sp.id_kelas = kl.id
 AND sp.id_tahun_ajaran = ta.id
-AND kl.id = 7
-AND ta.id = 6)]]>
+AND kl.id = $P{id_kelas}
+AND ta.id = $P{id_tahun_ajaran})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -182,7 +201,8 @@ AND ta.id = 6)]]>
 	<field name="b11" class="java.lang.Long"/>
 	<field name="b12" class="java.lang.Long"/>
 	<field name="seharusnya" class="java.lang.Long"/>
-	<field name="totalbayar" class="java.math.BigDecimal"/>
+	<field name="rekap" class="java.math.BigDecimal"/>
+	<field name="tunggakan" class="java.math.BigDecimal"/>
 	<title>
 		<band height="79" splitType="Stretch"/>
 	</title>
