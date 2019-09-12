@@ -217,9 +217,16 @@ public class CetakSiswa extends javax.swing.JFrame {
             JasperCompileManager.compileReport(fileName);
             
             Map param= new HashMap();
-
+            
+            Base.open();
+            String kelas = (String) Kelas.getSelectedItem();
+            String tahunajaran = (String) Tahun.getSelectedItem();
+            Base.close();
+            
             param.put("id_kelas",selectedComboKelasIndex );
             param.put("id_tahun_ajaran", selectedComboTahunAjaranIndex);
+            param.put("kelas", kelas);
+            param.put("tahunajaran", tahunajaran);
             
             java.util.Locale locale = new Locale( "id", "ID" );
             param.put( JRParameter.REPORT_LOCALE, locale );

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="siswa" language="groovy" pageWidth="1485" pageHeight="595" orientation="Landscape" columnWidth="1445" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7af54fa6-9a01-4595-b0a8-8537dda296e0">
-	<property name="ireport.zoom" value="1.4641000000000117"/>
-	<property name="ireport.x" value="1264"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.853116706110032"/>
+	<property name="ireport.x" value="161"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="id_kelas" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="id_tahun_ajaran" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="kelas" class="java.lang.String"/>
+	<parameter name="tahunajaran" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *, (
         SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
@@ -204,7 +206,58 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 	<field name="rekap" class="java.math.BigDecimal"/>
 	<field name="tunggakan" class="java.math.BigDecimal"/>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="158" splitType="Stretch">
+			<image>
+				<reportElement x="536" y="14" width="104" height="83" uuid="c160be54-c252-4353-b88a-ad7aa68d3fca"/>
+				<imageExpression><![CDATA["WhatsApp Image 2019-08-28 at 4.46.32 PM(1).png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="706" y="54" width="223" height="20" uuid="9d98e1de-f327-4024-9e8a-4e9d14ead778"/>
+				<text><![CDATA[Telp. (0726) 7850267 - 7850173 - 7851099]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="34" width="307" height="20" uuid="49526c9c-bf9e-45fe-9e20-30b24df8be27"/>
+				<text><![CDATA[Alamat : Jl. Dr. Sutomo 28 B Purwosari Metro Utara Kota Metro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="703" y="74" width="226" height="20" uuid="254ba414-0c91-4407-b961-1daf0c894087"/>
+				<textElement>
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PEMBAYARAN SPP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="706" y="14" width="223" height="20" uuid="fdac20dc-cae3-44af-8da7-cf146166a1c3"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PONDOK PESANTREN ISLAM AL MUHSIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="138" width="62" height="20" uuid="f3160997-ef7e-4e12-9c17-1f61ca7727f9"/>
+				<text><![CDATA[Tahun Ajaran]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="118" width="62" height="20" uuid="a647b13c-c8e2-4dea-b961-8125ae02ef52"/>
+				<text><![CDATA[Kelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="118" width="10" height="20" uuid="6693fe86-c3c3-49f7-bbe0-6295aebb8239"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="138" width="10" height="20" uuid="65c31d1b-4ba4-48ab-b639-effb2ded1ec9"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="118" width="100" height="20" uuid="528056b2-9152-4d3c-8102-e58dcc883517"/>
+				<textFieldExpression><![CDATA[$P{kelas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="138" width="100" height="20" uuid="18349168-9a66-4077-b7fa-259c089feb8b"/>
+				<textFieldExpression><![CDATA[$P{tahunajaran}]]></textFieldExpression>
+			</textField>
+		</band>
 	</title>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
@@ -337,7 +390,7 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21">
+		<band height="20">
 			<rectangle>
 				<reportElement x="0" y="0" width="19" height="20" uuid="da6df95f-2261-4fa0-9428-5abef6f8ba3a"/>
 			</rectangle>
@@ -400,59 +453,59 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 				<reportElement x="147" y="0" width="78" height="20" uuid="4c11726b-43b0-4973-9b16-33c92d7081bf"/>
 				<textFieldExpression><![CDATA[$F{nis}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="225" y="0" width="78" height="20" uuid="78f54b0d-b1b1-4007-b4d2-3cc0c7ff74d2"/>
 				<textFieldExpression><![CDATA[$F{b7}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="303" y="0" width="78" height="20" uuid="b68da92e-fdca-47dd-967f-c300a4b7c9e0"/>
 				<textFieldExpression><![CDATA[$F{b8}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="381" y="0" width="78" height="20" uuid="1dde6f39-094e-4c65-bc3f-9488bc051983"/>
 				<textFieldExpression><![CDATA[$F{b9}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="459" y="0" width="78" height="20" uuid="a850ba1f-b80a-4d55-85ec-eafe04fbe688"/>
 				<textFieldExpression><![CDATA[$F{b10}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="537" y="0" width="78" height="20" uuid="9339cf71-a368-4345-b84f-68bf712c4a9b"/>
 				<textFieldExpression><![CDATA[$F{b11}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="615" y="0" width="78" height="20" uuid="4a15c9dc-04a6-4ff6-b0f0-7a17b5993f69"/>
 				<textFieldExpression><![CDATA[$F{b12}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="693" y="0" width="78" height="20" uuid="f3ff1a29-aff4-48de-9efd-ec15127d67d2"/>
 				<textFieldExpression><![CDATA[$F{b1}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="771" y="0" width="78" height="20" uuid="df4bb691-eaf0-4cef-850b-4a877e7ae839"/>
 				<textFieldExpression><![CDATA[$F{b2}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="849" y="0" width="78" height="20" uuid="069a5c63-a481-4ebf-bf7f-2b24abf40382"/>
 				<textFieldExpression><![CDATA[$F{b3}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="927" y="0" width="78" height="20" uuid="0bdb225f-1d54-42f3-b58b-b1309ff16a0f"/>
 				<textFieldExpression><![CDATA[$F{b4}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="1005" y="0" width="78" height="20" uuid="74166bd3-ae0e-4298-8c8b-87a09e998b58"/>
 				<textFieldExpression><![CDATA[$F{b5}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="1083" y="0" width="78" height="20" uuid="38b4faa7-49da-419c-b294-0162e7dc580b"/>
 				<textFieldExpression><![CDATA[$F{b6}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="1161" y="0" width="94" height="20" uuid="c6d05f3e-f421-4d6d-9ca8-457485b1e61b"/>
 				<textFieldExpression><![CDATA[$F{rekap}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="1349" y="0" width="94" height="20" uuid="487c4576-568e-48a6-92f5-fa9a8e0a947f"/>
 				<textFieldExpression><![CDATA[$F{tunggakan}]]></textFieldExpression>
 			</textField>
@@ -460,7 +513,7 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 				<reportElement x="0" y="0" width="19" height="20" uuid="cdadd2dc-5f3d-477a-a178-9caed22718f1"/>
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement x="1255" y="0" width="94" height="20" uuid="b2e72d9a-3f28-4ca2-b503-c1f7047c1a33"/>
 				<textFieldExpression><![CDATA[$F{seharusnya}]]></textFieldExpression>
 			</textField>
