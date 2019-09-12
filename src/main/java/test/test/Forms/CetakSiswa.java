@@ -212,8 +212,8 @@ public class CetakSiswa extends javax.swing.JFrame {
         try{
             Config objkoneksi = new Config();
             Connection con = objkoneksi.bukakoneksi();
-            String fileName="src/main/java/test/test/Reports/laporan.jrxml";
-            String filetoFill="src/main/java/test/test/Reports/laporan.jasper";
+            String fileName="src/main/java/test/test/Reports/siswa.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/siswa.jasper";
             JasperCompileManager.compileReport(fileName);
             
             Map param= new HashMap();
