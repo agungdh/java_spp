@@ -1,8 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="siswa" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7af54fa6-9a01-4595-b0a8-8537dda296e0">
-	<background>
-		<band splitType="Stretch"/>
-	</background>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_kelas" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_tahun_ajaran" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 1
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b1, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 2
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b2, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 3
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b3, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 4
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b4, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 5
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b5, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 6
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b6, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 7
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b7, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 8
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b8, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 9
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b9, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 10
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b10, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 11
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b11, (
+        SELECT sp.spp + sp.operasional + sp.beras + sp.daftar_ulang
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND bs.bulan = 12
+        AND kl.id = 7
+        AND ta.id = 6
+    ) b12, (
+        SELECT (sp.spp + sp.operasional + sp.beras + sp.daftar_ulang) * 12
+        FROM spp sp, kelas kl, tahun_ajaran ta
+        WHERE sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND kl.id = 7
+        AND ta.id = 6
+    ) seharusnya, (
+        SELECT SUM(sp.spp) + SUM(sp.operasional) + SUM(sp.beras) + SUM(sp.daftar_ulang)
+        FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
+        WHERE bs.id_siswa = sw.id
+        AND bs.id_spp = sp.id
+        AND sp.id_kelas = kl.id
+        AND sp.id_tahun_ajaran = ta.id
+        AND kl.id = 7
+        AND ta.id = 6
+    ) totalbayar
+FROM siswa sw
+WHERE id IN (SELECT DISTINCT(sw.id) id_siswa
+FROM bayar_spp bs, siswa sw, kelas kl, tahun_ajaran ta, spp sp
+WHERE bs.id_spp = sp.id
+AND bs.id_siswa = sw.id
+AND sp.id_kelas = kl.id
+AND sp.id_tahun_ajaran = ta.id
+AND kl.id = 7
+AND ta.id = 6)]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_kelamin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="b1" class="java.lang.Long"/>
+	<field name="b2" class="java.lang.Long"/>
+	<field name="b3" class="java.lang.Long"/>
+	<field name="b4" class="java.lang.Long"/>
+	<field name="b5" class="java.lang.Long"/>
+	<field name="b6" class="java.lang.Long"/>
+	<field name="b7" class="java.lang.Long"/>
+	<field name="b8" class="java.lang.Long"/>
+	<field name="b9" class="java.lang.Long"/>
+	<field name="b10" class="java.lang.Long"/>
+	<field name="b11" class="java.lang.Long"/>
+	<field name="b12" class="java.lang.Long"/>
+	<field name="seharusnya" class="java.lang.Long"/>
+	<field name="totalbayar" class="java.math.BigDecimal"/>
 	<title>
 		<band height="79" splitType="Stretch"/>
 	</title>
@@ -12,16 +192,4 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch"/>
 	</columnHeader>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
