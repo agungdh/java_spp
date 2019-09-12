@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: septyan
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Wed, 11 Sep 2019 10:55:35 +0200
+-- Date: Thu, 12 Sep 2019 06:26:29 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -62,7 +62,7 @@ CREATE TABLE `bayar_spp` (
   KEY `id_siswa` (`id_siswa`),
   CONSTRAINT `bayar_spp_ibfk_1` FOREIGN KEY (`id_spp`) REFERENCES `spp` (`id`),
   CONSTRAINT `bayar_spp_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,12 +72,12 @@ CREATE TABLE `bayar_spp` (
 LOCK TABLES `bayar_spp` WRITE;
 /*!40000 ALTER TABLE `bayar_spp` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `bayar_spp` VALUES (19,5,1,'2019-09-04',1),(21,7,1,'2019-09-20',4),(22,5,1,'2019-09-06',3);
+INSERT INTO `bayar_spp` VALUES (19,5,1,'2019-09-04',1),(21,7,1,'2019-09-20',4),(22,5,1,'2019-09-06',3),(23,5,2,'2019-09-06',3);
 /*!40000 ALTER TABLE `bayar_spp` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bayar_spp` with 3 row(s)
+-- Dumped table `bayar_spp` with 4 row(s)
 --
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `siswa` (
   `nis` varchar(191) NOT NULL,
   `jenis_kelamin` varchar(191) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,12 +130,12 @@ CREATE TABLE `siswa` (
 LOCK TABLES `siswa` WRITE;
 /*!40000 ALTER TABLE `siswa` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `siswa` VALUES (1,'Agung Sapto Margono Dh','15753003','Laki-Laki'),(2,'Perempuan 1','15753000','Perempuan');
+INSERT INTO `siswa` VALUES (1,'Agung Sapto Margono Dh','15753003','Laki-Laki'),(2,'Intan Fitria ','16410066','Perempuan'),(5,'Septyan Yehezkiel','16410065','Laki-Laki'),(6,'Kiki Permata','16410074','Perempuan'),(7,'Syahrul','16410029','Laki-Laki'),(8,'Santika ','16410056','Perempuan'),(9,'Dhea ','16410045','Perempuan'),(10,'Pitono','16410039','Laki-Laki'),(11,'David','16410049','Laki-Laki');
 /*!40000 ALTER TABLE `siswa` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `siswa` with 2 row(s)
+-- Dumped table `siswa` with 9 row(s)
 --
 
 --
@@ -212,4 +212,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Wed, 11 Sep 2019 10:55:35 +0200
+-- Dump completed on: Thu, 12 Sep 2019 06:26:29 +0200
