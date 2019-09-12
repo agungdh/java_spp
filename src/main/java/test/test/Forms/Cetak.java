@@ -9,8 +9,10 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JFrame;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -52,6 +54,7 @@ public class Cetak extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cetak Laporan");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -169,6 +172,9 @@ public class Cetak extends javax.swing.JFrame {
             Dakhir = dateFormat.format(akhir.getDate());
             param.put("txt_tggl_a", Dawal);
             param.put("txt_tggl_b", Dakhir);
+            
+            java.util.Locale locale = new Locale( "id", "ID" );
+            param.put( JRParameter.REPORT_LOCALE, locale );
             
             JasperFillManager.fillReport(filetoFill, param, con);
             JasperPrint jp=JasperFillManager.fillReport(filetoFill, param,con);
