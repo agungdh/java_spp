@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan" language="groovy" pageWidth="1047" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1007" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83af2b50-318f-4f0b-be55-db83171c0f1e">
-	<property name="ireport.zoom" value="1.948717100000009"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="80"/>
+	<property name="ireport.zoom" value="1.3310000000000062"/>
+	<property name="ireport.x" value="341"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="txt_tggl_a" class="java.lang.String"/>
 	<parameter name="txt_tggl_b" class="java.lang.String"/>
 	<parameter name="tggl_a" class="java.lang.String">
@@ -12,8 +12,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT sw.nama, sw.nis, kl.kelas, ta.tahun_ajaran, sp.spp, sp.operasional, sp.beras, sp.daftar_ulang, bs.bulan,
-concat(lpad(day(bs.tanggal), 2, 0), '-', lpad(month(bs.tanggal), 2, 0), '-', year(bs.tanggal)) tanggal
+		<![CDATA[SELECT sw.nama, sw.nis, kl.kelas, ta.tahun_ajaran, sp.spp, sp.operasional, sp.beras, sp.daftar_ulang,
+concat(lpad(day(bs.tanggal), 2, 0), '-', lpad(month(bs.tanggal), 2, 0), '-', year(bs.tanggal)) tanggal,
+IF(bs.bulan=1, "Januari", IF(bs.bulan=2, "Februari", IF(bs.bulan=3, "Maret", IF(bs.bulan=4, "April", IF(bs.bulan=5, "Mei", IF(bs.bulan=6, "Juni", IF(bs.bulan=7, "Juli", IF(bs.bulan=8, "Agustus", IF(bs.bulan=9, "September", IF(bs.bulan=10, "Oktober", IF(bs.bulan=11, "November", IF(bs.bulan=12, "Desember", "SALAH !!!")))))))))))) bulan
 FROM bayar_spp bs, spp sp, siswa sw, kelas kl, tahun_ajaran ta
 WHERE bs.id_spp = sp.id
 AND bs.id_siswa = sw.id
@@ -45,10 +46,10 @@ AND bs.tanggal BETWEEN $P{tggl_a} AND $P{tggl_b}]]>
 	<field name="daftar_ulang" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="bulan" class="java.lang.Integer">
+	<field name="tanggal" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="tanggal" class="java.lang.String">
+	<field name="bulan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<title>
@@ -62,26 +63,26 @@ AND bs.tanggal BETWEEN $P{tggl_a} AND $P{tggl_b}]]>
 				<imageExpression><![CDATA["WhatsApp Image 2019-08-28 at 4.46.32 PM(1).png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="441" y="51" width="223" height="20" uuid="7b01dba0-a90a-4b90-9031-11e061b4023c"/>
+				<reportElement x="458" y="51" width="223" height="20" uuid="7b01dba0-a90a-4b90-9031-11e061b4023c"/>
 				<text><![CDATA[Telp. (0726) 7850267 - 7850173 - 7851099]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="403" y="31" width="307" height="20" uuid="34c205c7-dad9-4609-bba4-28aee1971b8f"/>
+				<reportElement x="420" y="31" width="307" height="20" uuid="34c205c7-dad9-4609-bba4-28aee1971b8f"/>
 				<text><![CDATA[Alamat : Jl. Dr. Sutomo 28 B Purwosari Metro Utara Kota Metro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="441" y="11" width="223" height="20" uuid="ac367254-25a7-40b8-9c78-3c0b16429f5c"/>
+				<reportElement x="458" y="11" width="223" height="20" uuid="ac367254-25a7-40b8-9c78-3c0b16429f5c"/>
 				<textElement>
 					<font size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PONDOK PESANTREN ISLAM AL MUHSIN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="71" width="226" height="20" uuid="4eb0172c-2524-41b3-9024-33982f0d8a7a"/>
+				<reportElement x="407" y="71" width="343" height="20" uuid="4eb0172c-2524-41b3-9024-33982f0d8a7a"/>
 				<textElement>
 					<font size="15" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[LAPORAN PEMBAYARAN SPP]]></text>
+				<text><![CDATA[LAPORAN PEMBAYARAN SPP PERTANGGAL]]></text>
 			</staticText>
 		</band>
 	</title>
