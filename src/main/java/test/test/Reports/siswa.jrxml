@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="siswa" language="groovy" pageWidth="1570" pageHeight="595" orientation="Landscape" columnWidth="1530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7af54fa6-9a01-4595-b0a8-8537dda296e0">
-	<property name="ireport.zoom" value="1.6105100000000199"/>
-	<property name="ireport.x" value="5"/>
-	<property name="ireport.y" value="36"/>
+	<property name="ireport.zoom" value="1.3310000000000168"/>
+	<property name="ireport.x" value="659"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id_kelas" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,6 +11,7 @@
 	</parameter>
 	<parameter name="kelas" class="java.lang.String"/>
 	<parameter name="tahunajaran" class="java.lang.String"/>
+	<parameter name="tanggal" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *,(
         SELECT sp.daftar_ulang
@@ -224,22 +225,22 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 				<imageExpression><![CDATA["WhatsApp Image 2019-08-28 at 4.46.32 PM(1).png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="706" y="54" width="223" height="20" uuid="9d98e1de-f327-4024-9e8a-4e9d14ead778"/>
+				<reportElement x="724" y="54" width="223" height="20" uuid="9d98e1de-f327-4024-9e8a-4e9d14ead778"/>
 				<text><![CDATA[Telp. (0726) 7850267 - 7850173 - 7851099]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="668" y="34" width="307" height="20" uuid="49526c9c-bf9e-45fe-9e20-30b24df8be27"/>
+				<reportElement x="679" y="34" width="307" height="20" uuid="49526c9c-bf9e-45fe-9e20-30b24df8be27"/>
 				<text><![CDATA[Alamat : Jl. Dr. Sutomo 28 B Purwosari Metro Utara Kota Metro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="703" y="74" width="315" height="20" uuid="254ba414-0c91-4407-b961-1daf0c894087"/>
+				<reportElement x="671" y="74" width="315" height="20" uuid="254ba414-0c91-4407-b961-1daf0c894087"/>
 				<textElement>
 					<font size="15" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[LAPORAN PEMBAYARAN SPP PERKELAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="706" y="14" width="223" height="20" uuid="fdac20dc-cae3-44af-8da7-cf146166a1c3"/>
+				<reportElement x="709" y="14" width="223" height="20" uuid="fdac20dc-cae3-44af-8da7-cf146166a1c3"/>
 				<textElement>
 					<font size="15" isBold="true"/>
 				</textElement>
@@ -545,4 +546,19 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="154">
+			<textField>
+				<reportElement x="1380" y="40" width="150" height="20" uuid="5aaa6d5d-26da-4aab-999a-16327b030e95"/>
+				<textFieldExpression><![CDATA["Purwosari, " + $P{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1380" y="60" width="61" height="20" uuid="54681f6a-fbbb-46df-9371-1cf475d21f77"/>
+				<text><![CDATA[Manager]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1380" y="152" width="150" height="1" uuid="94338864-bbb4-4161-91c4-18696a44f105"/>
+			</line>
+		</band>
+	</pageFooter>
 </jasperReport>

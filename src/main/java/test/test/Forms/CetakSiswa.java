@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -222,6 +223,10 @@ public class CetakSiswa extends javax.swing.JFrame {
             String kelas = (String) Kelas.getSelectedItem();
             String tahunajaran = (String) Tahun.getSelectedItem();
             Base.close();
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String tanggal_ = formatter.format(new Date());
+            param.put("tanggal", tanggal_);
             
             param.put("id_kelas",selectedComboKelasIndex );
             param.put("id_tahun_ajaran", selectedComboTahunAjaranIndex);

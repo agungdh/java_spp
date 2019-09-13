@@ -8,6 +8,7 @@ package test.test.Forms;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -172,7 +173,9 @@ public class Cetak extends javax.swing.JFrame {
             Dakhir = dateFormat.format(akhir.getDate());
             param.put("txt_tggl_a", Dawal);
             param.put("txt_tggl_b", Dakhir);
-            
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String tanggal_ = formatter.format(new Date());
+            param.put("tanggal", tanggal_);
             java.util.Locale locale = new Locale( "id", "ID" );
             param.put( JRParameter.REPORT_LOCALE, locale );
             
