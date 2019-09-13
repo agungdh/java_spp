@@ -105,7 +105,7 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
 
-        jPanel6.setBackground(new java.awt.Color(102, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel11.setBackground(new java.awt.Color(102, 255, 255));
