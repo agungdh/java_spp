@@ -763,13 +763,8 @@ public class BayarSPP extends javax.swing.JFrame {
             
             int jumlahBSPP = bsppF.size();
             JumlahBulan.setValue(jumlahBSPP);
-            String bulanAwal;
-            String bulanAkhir;
             BayarSPPModel bsppSatu = bsppF.get(0);
-            bulanAwal = ADHhelper.bulan(bsppSatu.getInteger("bulan"));
-            int bulanAkhirRaw = ADHhelper.tambahBulanInteger(bsppSatu.getInteger("bulan"), jumlahBSPP - 1);
-            bulanAkhir = ADHhelper.bulan(bulanAkhirRaw);
-            SampaiBulan.setText(bulanAwal + " - " + bulanAkhir);
+            SampaiBulan.setText(ADHhelper.hasilTambahBulanString(bsppSatu.getInteger("bulan"), jumlahBSPP));
             Base.close();
             
             Cetak.setEnabled(true);

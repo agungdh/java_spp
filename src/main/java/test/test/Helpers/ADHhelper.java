@@ -21,6 +21,17 @@ import org.joda.time.Months;
  * @author user
  */
 public class ADHhelper {
+    public static String hasilTambahBulanString(int bulanAwalParam, int tambahParam) {
+        String bulanAwal = ADHhelper.bulan(bulanAwalParam);
+        int bulanAkhirRaw = ADHhelper.tambahBulanInteger(bulanAwalParam, tambahParam - 1);
+        String bulanAkhir = ADHhelper.bulan(bulanAkhirRaw);
+        if (tambahParam > 1) {
+            return bulanAwal + " - " + bulanAkhir;
+        } else {
+            return bulanAwal;
+        }
+    }
+    
     public static int tambahBulanInteger(int bulanAwal, int tambah) {
         int hasil = bulanAwal;
         
