@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="siswa" language="groovy" pageWidth="1570" pageHeight="595" orientation="Landscape" columnWidth="1530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7af54fa6-9a01-4595-b0a8-8537dda296e0">
 	<property name="ireport.zoom" value="1.3310000000000168"/>
-	<property name="ireport.x" value="11"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2"/>
 	<parameter name="id_kelas" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -34,6 +34,7 @@
         AND bs.bulan = 1
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b1, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -44,6 +45,7 @@
         AND bs.bulan = 2
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b2, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -54,6 +56,7 @@
         AND bs.bulan = 3
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b3, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -64,6 +67,7 @@
         AND bs.bulan = 4
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b4, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -74,6 +78,7 @@
         AND bs.bulan = 5
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b5, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -84,6 +89,7 @@
         AND bs.bulan = 6
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b6, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -94,6 +100,7 @@
         AND bs.bulan = 7
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b7, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -104,6 +111,7 @@
         AND bs.bulan = 8
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b8, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -114,6 +122,7 @@
         AND bs.bulan = 9
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b9, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -124,6 +133,7 @@
         AND bs.bulan = 10
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b10, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -134,6 +144,7 @@
         AND bs.bulan = 11
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b11, (
         SELECT sp.spp + sp.operasional + sp.beras
         FROM bayar_spp bs, spp sp, kelas kl, tahun_ajaran ta
@@ -144,6 +155,7 @@
         AND bs.bulan = 12
         AND kl.id = $P{id_kelas}
         AND ta.id = $P{id_tahun_ajaran}
+        LIMIT 1
     ) b12, (
         SELECT ((sp.spp + sp.operasional + sp.beras) * 12) + sp.daftar_ulang
         FROM spp sp, kelas kl, tahun_ajaran ta
