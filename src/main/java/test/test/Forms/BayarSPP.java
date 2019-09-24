@@ -892,7 +892,7 @@ public class BayarSPP extends javax.swing.JFrame {
         int operasional_ = spp.getInteger("operasional") * (int) JumlahBulan.getValue();
         int beras_ = spp.getInteger("beras") * (int) JumlahBulan.getValue();
         int daftar_ = spp.getInteger("daftar_ulang") * (int) JumlahBulan.getValue();
-        int total_ = (spp_ + operasional_ + beras_) * (int) JumlahBulan.getValue();
+        int total_ = (spp_ + operasional_ + beras_);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String tanggal_ = formatter.format(new Date());
 
