@@ -298,12 +298,14 @@ public class BayarSPP extends javax.swing.JFrame {
         Base.open();
         
         try {
-            BayarSPPModel bspp = new BayarSPPModel();
-            bspp.set("id_siswa", siswaId);
-            bspp.set("id_spp", sppId);
-            bspp.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
-            bspp.set("bulan", Bulan.getSelectedIndex() + 1);
-            bspp.save();
+            for (int i = 1; i <= (int) JumlahBulan.getValue(); i++) {
+                BayarSPPModel bspp = new BayarSPPModel();
+                bspp.set("id_siswa", siswaId);
+                bspp.set("id_spp", sppId);
+                bspp.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
+                bspp.set("bulan", Bulan.getSelectedIndex() + i);
+                bspp.save();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -777,6 +779,8 @@ public class BayarSPP extends javax.swing.JFrame {
         if (state.equals("index")) {
             if (Tanggal.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
+            } else if ((int) JumlahBulan.getValue() < 1) {
+                JOptionPane.showMessageDialog(null, "Form Jumlah Bulan Masih Kosong !!!");
             } else {
                 if (siswaAda && sppAda) {
                     Base.open();
@@ -913,7 +917,7 @@ public class BayarSPP extends javax.swing.JFrame {
     }//GEN-LAST:event_CetakActionPerformed
 
     private void BulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BulanActionPerformed
-        
+        SampaiBulan.setText(ADHhelper.hasilTambahBulanString(Bulan.getSelectedIndex() + 1, (int) JumlahBulan.getValue()));
     }//GEN-LAST:event_BulanActionPerformed
     
     /**
