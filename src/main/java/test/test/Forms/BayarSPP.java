@@ -884,15 +884,15 @@ public class BayarSPP extends javax.swing.JFrame {
         Base.close();
 
         String nama_ = siswa.getString("nama");
-        String bulan_ = ADHhelper.bulan(bspp.getInteger("bulan"));
+        String bulan_ = SampaiBulan.getText();
         String nis_ = siswa.getString("nis");
         String kelas_ = kelas.getString("kelas");
         String tahunajaran_ = tahunAjaran.getString("tahun_ajaran");
-        int spp_ = spp.getInteger("spp");
-        int operasional_ = spp.getInteger("operasional");
-        int beras_ = spp.getInteger("beras");
-        int daftar_ = spp.getInteger("daftar_ulang");
-        int total_ = spp_ + operasional_ + beras_ + daftar_;
+        int spp_ = spp.getInteger("spp") * (int) JumlahBulan.getValue();
+        int operasional_ = spp.getInteger("operasional") * (int) JumlahBulan.getValue();
+        int beras_ = spp.getInteger("beras") * (int) JumlahBulan.getValue();
+        int daftar_ = spp.getInteger("daftar_ulang") * (int) JumlahBulan.getValue();
+        int total_ = (spp_ + operasional_ + beras_) * (int) JumlahBulan.getValue();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String tanggal_ = formatter.format(new Date());
 
