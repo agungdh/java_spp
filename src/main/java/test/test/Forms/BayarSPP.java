@@ -29,6 +29,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -101,6 +103,13 @@ public class BayarSPP extends javax.swing.JFrame {
             }
             public void changedUpdate(DocumentEvent e) {
                 cariSiswa(Nis.getText());
+            }
+        });
+        
+        JumlahBulan.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                SampaiBulan.setText(ADHhelper.hasilTambahBulanString(Bulan.getSelectedIndex() + 1, (int) JumlahBulan.getValue()));
             }
         });
         
