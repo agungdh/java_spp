@@ -21,6 +21,19 @@ import org.joda.time.Months;
  * @author user
  */
 public class ADHhelper {
+    public static int tambahBulanInteger(int bulanAwal, int tambah) {
+        int hasil = bulanAwal;
+        
+        for (int i = 1; i <= tambah; i++) {
+            hasil++;
+            if (hasil > 12) {
+                hasil = 1;
+            }
+        }
+        
+        return hasil;
+    }
+
     public static Calendar dateToCalendar(Date tanggalParam) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(tanggalParam);
