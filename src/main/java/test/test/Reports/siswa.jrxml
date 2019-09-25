@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="siswa" language="groovy" pageWidth="1570" pageHeight="595" orientation="Landscape" columnWidth="1530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7af54fa6-9a01-4595-b0a8-8537dda296e0">
-	<property name="ireport.zoom" value="1.3310000000000168"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2"/>
+	<property name="ireport.zoom" value="1.0000000000000144"/>
+	<property name="ireport.x" value="689"/>
+	<property name="ireport.y" value="55"/>
 	<parameter name="id_kelas" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -230,6 +230,15 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 	<field name="seharusnya" class="java.lang.Long"/>
 	<field name="rekap" class="java.math.BigDecimal"/>
 	<field name="tunggakan" class="java.math.BigDecimal"/>
+	<variable name="seharusnya_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{seharusnya}]]></variableExpression>
+	</variable>
+	<variable name="rekap_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{rekap}]]></variableExpression>
+	</variable>
+	<variable name="tunggakan_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{tunggakan}]]></variableExpression>
+	</variable>
 	<title>
 		<band height="158" splitType="Stretch">
 			<image>
@@ -558,6 +567,41 @@ AND ta.id = $P{id_tahun_ajaran})]]>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="22">
+			<rectangle>
+				<reportElement x="1170" y="0" width="78" height="20" uuid="907c3b0c-2463-408c-8a80-2c9d96273755"/>
+			</rectangle>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="1170" y="0" width="78" height="20" uuid="4a9450cf-79bf-41c3-9d7b-a32e4c6fd7ae"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1248" y="0" width="94" height="20" uuid="26b254f4-319c-4a4b-bd23-5d30c2f99500"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1342" y="0" width="94" height="20" uuid="d2a4611c-7e2b-489d-8e08-bdf1ca34ce5f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1436" y="0" width="94" height="20" uuid="75478d83-05af-4d44-a50e-0dd8b4559678"/>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="1342" y="0" width="94" height="20" uuid="e17755b3-97d5-465d-9458-045ed5854d69"/>
+				<textFieldExpression><![CDATA[$V{seharusnya_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="1436" y="0" width="94" height="20" uuid="ce4b78c7-57eb-45e5-a2ce-1b864bd7f549"/>
+				<textFieldExpression><![CDATA[$V{tunggakan_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="1248" y="0" width="94" height="20" uuid="54c50995-a8d7-454a-9da3-107adfe27210"/>
+				<textFieldExpression><![CDATA[$V{rekap_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
 	<pageFooter>
 		<band height="154">
 			<textField>
