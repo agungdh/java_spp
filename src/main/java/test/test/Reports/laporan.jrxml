@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan" language="groovy" pageWidth="1047" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1007" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83af2b50-318f-4f0b-be55-db83171c0f1e">
-	<property name="ireport.zoom" value="1.464100000000007"/>
-	<property name="ireport.x" value="594"/>
-	<property name="ireport.y" value="231"/>
+	<property name="ireport.zoom" value="1.61051000000001"/>
+	<property name="ireport.x" value="830"/>
+	<property name="ireport.y" value="191"/>
 	<parameter name="txt_tggl_a" class="java.lang.String"/>
 	<parameter name="txt_tggl_b" class="java.lang.String"/>
 	<parameter name="tggl_a" class="java.lang.String">
@@ -15,7 +15,17 @@
 	<queryString>
 		<![CDATA[SELECT sw.nama, sw.nis, kl.kelas, ta.tahun_ajaran, sp.spp, sp.operasional, sp.beras, sp.daftar_ulang,
 concat(lpad(day(bs.tanggal), 2, 0), '-', lpad(month(bs.tanggal), 2, 0), '-', year(bs.tanggal)) tanggal,
-IF(bs.bulan=1, "Januari", IF(bs.bulan=2, "Februari", IF(bs.bulan=3, "Maret", IF(bs.bulan=4, "April", IF(bs.bulan=5, "Mei", IF(bs.bulan=6, "Juni", IF(bs.bulan=7, "Juli", IF(bs.bulan=8, "Agustus", IF(bs.bulan=9, "September", IF(bs.bulan=10, "Oktober", IF(bs.bulan=11, "November", IF(bs.bulan=12, "Desember", "SALAH !!!")))))))))))) bulan
+IF(bs.bulan=1, "Januari", IF(bs.bulan=2, "Februari", IF(bs.bulan=3, "Maret", IF(bs.bulan=4, "April", IF(bs.bulan=5, "Mei", IF(bs.bulan=6, "Juni", IF(bs.bulan=7, "Juli", IF(bs.bulan=8, "Agustus", IF(bs.bulan=9, "September", IF(bs.bulan=10, "Oktober", IF(bs.bulan=11, "November", IF(bs.bulan=12, "Desember", "SALAH !!!")))))))))))) bulan,
+sp.spp + sp.operasional + sp.beras + sp.daftar_ulang total,
+(
+	SELECT sum(sp.spp) + sum(sp.operasional) + sum(sp.beras) + sum(sp.daftar_ulang)
+	FROM bayar_spp bs, spp sp, siswa sw, kelas kl, tahun_ajaran ta
+	WHERE bs.id_spp = sp.id
+	AND bs.id_siswa = sw.id
+	AND sp.id_kelas = kl.id
+	AND sp.id_tahun_ajaran = ta.id
+	AND bs.tanggal BETWEEN $P{tggl_a} AND $P{tggl_b}
+) totalall
 FROM bayar_spp bs, spp sp, siswa sw, kelas kl, tahun_ajaran ta
 WHERE bs.id_spp = sp.id
 AND bs.id_siswa = sw.id
@@ -53,6 +63,8 @@ AND bs.tanggal BETWEEN $P{tggl_a} AND $P{tggl_b}]]>
 	<field name="bulan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="total" class="java.lang.Long"/>
+	<field name="totalall" class="java.math.BigDecimal"/>
 	<title>
 		<band height="133" splitType="Stretch">
 			<textField>
@@ -249,6 +261,27 @@ AND bs.tanggal BETWEEN $P{tggl_a} AND $P{tggl_b}]]>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="22">
+			<rectangle>
+				<reportElement x="897" y="0" width="110" height="20" uuid="5aed4552-ca84-4f15-bb39-670d926a02c3"/>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="897" y="0" width="110" height="20" uuid="588982c4-a75d-415e-820e-a34f540f3be2"/>
+				<textFieldExpression><![CDATA[$F{totalall}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="781" y="0" width="116" height="20" uuid="288b0b97-e5e2-4de4-b0ba-839f15d7be85"/>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="781" y="0" width="116" height="20" uuid="f0b42444-b43c-4ffa-8609-f506c3739d99"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
 	<pageFooter>
 		<band height="184">
 			<line>
